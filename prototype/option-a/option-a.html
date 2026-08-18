@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Option A — User-led Organized Notes</title>
+  <link rel="stylesheet" href="option-a.css" />
+</head>
+
+<body>
+  <main class="page-shell">
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="header-copy">
+        <p class="eyebrow">TRACK 1 · DAY 18 · CASE B — AI NOTES</p>
+        <h1>Option A — User-led Organized Notes</h1>
+        <p class="subtitle">
+          Bạn tự chọn và tổ chức learning traces. AI không tự phân loại,
+          không tóm tắt và không tạo nội dung mới.
+        </p>
+      </div>
+
+      <div class="header-actions">
+        <span class="ai-mode-badge">AI: Don't Act</span>
+        <button id="topResetBtn" class="btn btn-secondary" type="button">
+          Reset
+        </button>
+      </div>
+    </header>
+
+    <!-- LESSON CONTEXT -->
+    <section class="lesson-banner" aria-labelledby="lesson-title">
+      <div>
+        <p class="lesson-kicker">LESSON COMPLETED</p>
+        <h2 id="lesson-title">Monitoring, Logging &amp; Observability</h2>
+        <p class="lesson-description">
+          Bạn đã lưu <strong>6 learning traces</strong>.
+          Hãy tự tổ chức chúng thành một bộ ghi chú để dùng lại khi ôn tập.
+        </p>
+      </div>
+
+      <div class="progress-card" aria-live="polite">
+        <strong id="progressNumber">0/6</strong>
+        <span>đã được tổ chức</span>
+      </div>
+    </section>
+
+    <!-- EXPECTATION -->
+    <section class="expectation-card">
+      <div class="expectation-icon">i</div>
+      <div>
+        <strong>Bạn đang kiểm soát toàn bộ quá trình</strong>
+        <p>
+          Hệ thống chỉ tập hợp các nội dung bạn đã lưu. Mọi quyết định
+          nhóm, sắp xếp, đổi tên hoặc loại bỏ đều do bạn thực hiện.
+        </p>
+      </div>
+    </section>
+
+    <!-- MAIN WORKSPACE -->
+    <section class="workspace">
+      <!-- LEFT: ORIGINAL TRACES -->
+      <aside class="panel source-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="step-number">1</span>
+            <div>
+              <h3>Original Learning Traces</h3>
+              <p>Kéo card sang một section ở bên phải.</p>
+            </div>
+          </div>
+
+          <span id="remainingCounter" class="counter-badge">6 còn lại</span>
+        </div>
+
+        <div id="traceList" class="trace-list">
+          <!-- JS render -->
+        </div>
+      </aside>
+
+      <!-- RIGHT: USER ORGANIZER -->
+      <section class="panel organizer-panel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <span class="step-number">2</span>
+            <div>
+              <h3>Your Organized Notes</h3>
+              <p>Tự quyết định cấu trúc phù hợp với cách bạn ôn tập.</p>
+            </div>
+          </div>
+
+          <button
+            id="undoBtn"
+            class="btn btn-secondary btn-small"
+            type="button"
+            disabled
+          >
+            Undo
+          </button>
+        </div>
+
+        <div id="sectionGrid" class="section-grid">
+          <!-- JS render -->
+        </div>
+
+        <!-- ADD SECTION -->
+        <div class="add-section-box">
+          <div>
+            <label for="newSectionInput">Tạo section mới</label>
+            <p>Ví dụ: Exam Checklist, Important Metrics, Review Later...</p>
+          </div>
+
+          <div class="add-section-controls">
+            <input
+              id="newSectionInput"
+              type="text"
+              maxlength="40"
+              placeholder="Tên section mới"
+            />
+            <button id="addSectionBtn" class="btn btn-secondary" type="button">
+              + Add section
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTROL + RECOVERY -->
+        <div class="control-recovery-card">
+          <div class="control-icon">✓</div>
+          <div>
+            <strong>Control &amp; Recovery</strong>
+            <p>
+              Nội dung gốc luôn được giữ lại. Bạn có thể Undo thao tác gần nhất,
+              đưa từng trace về danh sách gốc hoặc Reset toàn bộ prototype.
+            </p>
+          </div>
+        </div>
+
+        <!-- FOOTER ACTIONS -->
+        <footer class="action-footer">
+          <div class="status-area">
+            <span id="statusMessage" class="status-message">
+              Kéo một learning trace sang section để bắt đầu.
+            </span>
+          </div>
+
+          <div class="footer-buttons">
+            <button id="resetBtn" class="btn btn-secondary" type="button">
+              Reset to original
+            </button>
+            <button id="saveBtn" class="btn btn-primary" type="button" disabled>
+              Save Notes
+            </button>
+          </div>
+        </footer>
+      </section>
+    </section>
+
+    <!-- PROTOTYPE NOTE -->
+    <section class="prototype-note">
+      <strong>Prototype scope:</strong>
+      Option A kiểm tra một cơ chế <em>user-led / no-inference</em>:
+      learner tự tổ chức toàn bộ nội dung, AI không đưa ra đề xuất.
+    </section>
+  </main>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // =========================================================
+    // OPTION A — USER-LED ORGANIZED NOTES
+    // Native HTML/CSS/JavaScript — no framework, no API.
+    // =========================================================
+
+    const TRACE_DATA = [
+      {
+        id: "trace-1",
+        type: "Highlight",
+        title: "P95 latency",
+        detail:
+          "P95 latency represents the latency threshold under which 95% of requests complete.",
+        source: "Latency Metrics · Highlight 01"
+      },
+      {
+        id: "trace-2",
+        type: "Highlight",
+        title: "Average latency",
+        detail:
+          "Average latency can hide a small number of very slow requests.",
+        source: "Latency Metrics · Highlight 02"
+      },
+      {
+        id: "trace-3",
+        type: "Chưa hiểu",
+        title: "Percentile",
+        detail:
+          "Khái niệm cần xem lại trước khi ôn P50, P95 và P99.",
+        source: "Latency Metrics · Marked as “Chưa hiểu”"
+      },
+      {
+        id: "trace-4",
+        type: "Question",
+        title: "Tại sao dùng P95 thay vì average latency?",
+        detail:
+          "Câu hỏi cá nhân được ghi lại trong lúc học.",
+        source: "My Question · Question 01"
+      },
+      {
+        id: "trace-5",
+        type: "Note",
+        title: "P95 giúp nhìn thấy tail latency.",
+        detail:
+          "Ghi chú ngắn của learner.",
+        source: "My Notes · Note 01"
+      },
+      {
+        id: "trace-6",
+        type: "Note",
+        title: "Cần xem lại P50 / P95 / P99",
+        detail:
+          "So sánh ba percentile trước khi ôn tập.",
+        source: "My Notes · Note 02"
+      }
+    ];
+
+    const DEFAULT_SECTIONS = [
+      { id: "key-concepts", title: "Key Concepts", traceIds: [] },
+      { id: "need-review", title: "Need to Review", traceIds: [] },
+      { id: "my-questions", title: "My Questions", traceIds: [] }
+    ];
+
+    let sections = cloneSections(DEFAULT_SECTIONS);
+    let history = [];
+    let draggedTraceId = null;
+    let isSaved = false;
+
+    const traceListEl = document.getElementById("traceList");
+    const sectionGridEl = document.getElementById("sectionGrid");
+    const progressNumberEl = document.getElementById("progressNumber");
+    const remainingCounterEl = document.getElementById("remainingCounter");
+    const statusMessageEl = document.getElementById("statusMessage");
+    const undoBtn = document.getElementById("undoBtn");
+    const saveBtn = document.getElementById("saveBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const topResetBtn = document.getElementById("topResetBtn");
+    const newSectionInput = document.getElementById("newSectionInput");
+    const addSectionBtn = document.getElementById("addSectionBtn");
+    const toastEl = document.getElementById("toast");
+
+    function cloneSections(items) {
+      return items.map((section) => ({
+        ...section,
+        traceIds: [...section.traceIds]
+      }));
+    }
+
+    function getTrace(traceId) {
+      return TRACE_DATA.find((trace) => trace.id === traceId);
+    }
+
+    function getAssignedIds() {
+      return new Set(sections.flatMap((section) => section.traceIds));
+    }
+
+    function getUnassignedTraces() {
+      const assigned = getAssignedIds();
+      return TRACE_DATA.filter((trace) => !assigned.has(trace.id));
+    }
+
+    function pushHistory() {
+      history.push(cloneSections(sections));
+
+      if (history.length > 20) {
+        history.shift();
+      }
+    }
+
+    function badgeClass(type) {
+      if (type === "Highlight") return "badge-highlight";
+      if (type === "Chưa hiểu") return "badge-unknown";
+      if (type === "Question") return "badge-question";
+      return "badge-note";
+    }
+
+    function createTraceCard(trace, compact = false) {
+      const article = document.createElement("article");
+      article.className = compact
+        ? "organized-trace-card"
+        : "trace-card";
+      article.draggable = true;
+      article.dataset.traceId = trace.id;
+
+      article.addEventListener("dragstart", (event) => {
+        draggedTraceId = trace.id;
+        event.dataTransfer.setData("text/plain", trace.id);
+        event.dataTransfer.effectAllowed = "move";
+        article.classList.add("is-dragging");
+      });
+
+      article.addEventListener("dragend", () => {
+        draggedTraceId = null;
+        article.classList.remove("is-dragging");
+        document
+          .querySelectorAll(".drop-zone")
+          .forEach((zone) => zone.classList.remove("drop-zone-active"));
+      });
+
+      if (!compact) {
+        article.innerHTML = `
+          <div class="trace-card-top">
+            <span class="type-badge ${badgeClass(trace.type)}">${trace.type}</span>
+            <span class="drag-handle" aria-hidden="true">⋮⋮</span>
+          </div>
+
+          <h4>${escapeHtml(trace.title)}</h4>
+          <p>${escapeHtml(trace.detail)}</p>
+          <small>${escapeHtml(trace.source)}</small>
+        `;
+      } else {
+        article.innerHTML = `
+          <div class="organized-trace-content">
+            <span class="mini-type">${escapeHtml(trace.type)}</span>
+            <h5>${escapeHtml(trace.title)}</h5>
+            <small>${escapeHtml(trace.source)}</small>
+          </div>
+
+          <button
+            class="remove-trace-btn"
+            type="button"
+            title="Đưa về danh sách gốc"
+            aria-label="Đưa ${escapeHtml(trace.title)} về danh sách gốc"
+          >
+            ×
+          </button>
+        `;
+
+        article
+          .querySelector(".remove-trace-btn")
+          .addEventListener("click", (event) => {
+            event.stopPropagation();
+            removeTraceFromSections(trace.id);
+          });
+      }
+
+      return article;
+    }
+
+    function renderTraceList() {
+      const unassigned = getUnassignedTraces();
+      traceListEl.innerHTML = "";
+
+      if (unassigned.length === 0) {
+        traceListEl.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-check">✓</div>
+            <h4>Đã tổ chức hết</h4>
+            <p>Tất cả learning traces đã được đưa vào các section.</p>
+          </div>
+        `;
+        return;
+      }
+
+      unassigned.forEach((trace) => {
+        traceListEl.appendChild(createTraceCard(trace));
+      });
+    }
+
+    function renderSections() {
+      sectionGridEl.innerHTML = "";
+
+      sections.forEach((section) => {
+        const sectionEl = document.createElement("section");
+        sectionEl.className = "note-section";
+
+        const sectionHeader = document.createElement("div");
+        sectionHeader.className = "note-section-header";
+
+        sectionHeader.innerHTML = `
+          <div>
+            <h4>${escapeHtml(section.title)}</h4>
+            <span>${section.traceIds.length} items</span>
+          </div>
+
+          <div class="section-actions">
+            <button
+              class="section-action-btn rename-section-btn"
+              type="button"
+            >
+              Edit
+            </button>
+
+            ${
+              sections.length > 1
+                ? `
+                  <button
+                    class="section-action-btn delete-section-btn"
+                    type="button"
+                  >
+                    Delete
+                  </button>
+                `
+                : ""
+            }
+          </div>
+        `;
+
+        sectionHeader
+          .querySelector(".rename-section-btn")
+          .addEventListener("click", () => renameSection(section.id));
+
+        const deleteBtn =
+          sectionHeader.querySelector(".delete-section-btn");
+
+        if (deleteBtn) {
+          deleteBtn.addEventListener("click", () =>
+            deleteSection(section.id)
+          );
+        }
+
+        const dropZone = document.createElement("div");
+        dropZone.className = "drop-zone";
+        dropZone.dataset.sectionId = section.id;
+
+        dropZone.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+          dropZone.classList.add("drop-zone-active");
+        });
+
+        dropZone.addEventListener("dragleave", (event) => {
+          if (!dropZone.contains(event.relatedTarget)) {
+            dropZone.classList.remove("drop-zone-active");
+          }
+        });
+
+        dropZone.addEventListener("drop", (event) => {
+          event.preventDefault();
+          dropZone.classList.remove("drop-zone-active");
+
+          const traceId =
+            event.dataTransfer.getData("text/plain") || draggedTraceId;
+
+          if (traceId) {
+            moveTrace(traceId, section.id);
+          }
+        });
+
+        if (section.traceIds.length === 0) {
+          dropZone.innerHTML = `
+            <div class="drop-placeholder">
+              <span>＋</span>
+              <p>Thả learning trace vào đây</p>
+            </div>
+          `;
+        } else {
+          section.traceIds.forEach((traceId) => {
+            const trace = getTrace(traceId);
+
+            if (trace) {
+              dropZone.appendChild(createTraceCard(trace, true));
+            }
+          });
+        }
+
+        sectionEl.appendChild(sectionHeader);
+        sectionEl.appendChild(dropZone);
+        sectionGridEl.appendChild(sectionEl);
+      });
+    }
+
+    function renderStatus() {
+      const assignedCount = getAssignedIds().size;
+      const remainingCount = TRACE_DATA.length - assignedCount;
+
+      progressNumberEl.textContent =
+        `${assignedCount}/${TRACE_DATA.length}`;
+
+      remainingCounterEl.textContent =
+        `${remainingCount} còn lại`;
+
+      undoBtn.disabled = history.length === 0;
+      saveBtn.disabled = assignedCount === 0;
+
+      if (isSaved) {
+        statusMessageEl.textContent = "✓ Notes đã được lưu";
+        statusMessageEl.className = "status-message status-saved";
+      } else if (assignedCount === 0) {
+        statusMessageEl.textContent =
+          "Kéo một learning trace sang section để bắt đầu.";
+        statusMessageEl.className = "status-message";
+      } else {
+        statusMessageEl.textContent =
+          `${assignedCount} nội dung đã được tổ chức.`;
+        statusMessageEl.className = "status-message";
+      }
+    }
+
+    function render() {
+      renderTraceList();
+      renderSections();
+      renderStatus();
+    }
+
+    function moveTrace(traceId, targetSectionId) {
+      if (!getTrace(traceId)) return;
+
+      pushHistory();
+      isSaved = false;
+
+      sections = sections.map((section) => {
+        const cleanedIds =
+          section.traceIds.filter((id) => id !== traceId);
+
+        if (section.id === targetSectionId) {
+          return {
+            ...section,
+            traceIds: [...cleanedIds, traceId]
+          };
+        }
+
+        return {
+          ...section,
+          traceIds: cleanedIds
+        };
+      });
+
+      render();
+    }
+
+    function removeTraceFromSections(traceId) {
+      pushHistory();
+      isSaved = false;
+
+      sections = sections.map((section) => ({
+        ...section,
+        traceIds:
+          section.traceIds.filter((id) => id !== traceId)
+      }));
+
+      render();
+    }
+
+    function renameSection(sectionId) {
+      const section =
+        sections.find((item) => item.id === sectionId);
+
+      if (!section) return;
+
+      const newTitle = window
+        .prompt("Tên section mới:", section.title)
+        ?.trim();
+
+      if (!newTitle || newTitle === section.title) return;
+
+      pushHistory();
+      isSaved = false;
+
+      sections = sections.map((item) =>
+        item.id === sectionId
+          ? { ...item, title: newTitle }
+          : item
+      );
+
+      render();
+    }
+
+    function deleteSection(sectionId) {
+      const section =
+        sections.find((item) => item.id === sectionId);
+
+      if (!section) return;
+
+      if (section.traceIds.length > 0) {
+        const confirmed = window.confirm(
+          "Section này đang có nội dung. Xóa section sẽ đưa các learning trace về danh sách gốc. Tiếp tục?"
+        );
+
+        if (!confirmed) return;
+      }
+
+      pushHistory();
+      isSaved = false;
+
+      sections =
+        sections.filter((item) => item.id !== sectionId);
+
+      render();
+    }
+
+    function addSection() {
+      const title = newSectionInput.value.trim();
+
+      if (!title) {
+        newSectionInput.focus();
+        showToast("Hãy nhập tên section.");
+        return;
+      }
+
+      pushHistory();
+      isSaved = false;
+
+      sections.push({
+        id: `section-${Date.now()}`,
+        title,
+        traceIds: []
+      });
+
+      newSectionInput.value = "";
+      render();
+      showToast("Đã tạo section mới.");
+    }
+
+    function undo() {
+      if (history.length === 0) return;
+
+      const previousState = history.pop();
+      sections = cloneSections(previousState);
+      isSaved = false;
+
+      render();
+      showToast("Đã hoàn tác thao tác gần nhất.");
+    }
+
+    function resetPrototype() {
+      const hasChanges =
+        getAssignedIds().size > 0 ||
+        history.length > 0 ||
+        sections.length !== DEFAULT_SECTIONS.length;
+
+      if (hasChanges) {
+        const confirmed = window.confirm(
+          "Bạn muốn đưa prototype về trạng thái ban đầu?"
+        );
+
+        if (!confirmed) return;
+      }
+
+      sections = cloneSections(DEFAULT_SECTIONS);
+      history = [];
+      draggedTraceId = null;
+      isSaved = false;
+      newSectionInput.value = "";
+
+      localStorage.removeItem("day18-option-a-notes");
+
+      render();
+      showToast("Đã reset prototype.");
+    }
+
+    function saveNotes() {
+      const assignedCount = getAssignedIds().size;
+
+      if (assignedCount === 0) return;
+
+      const payload = {
+        savedAt: new Date().toISOString(),
+        sections: cloneSections(sections)
+      };
+
+      localStorage.setItem(
+        "day18-option-a-notes",
+        JSON.stringify(payload)
+      );
+
+      isSaved = true;
+      renderStatus();
+      showToast("Đã lưu cấu trúc note trên trình duyệt.");
+    }
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.add("toast-visible");
+
+      clearTimeout(showToast.timeout);
+
+      showToast.timeout = setTimeout(() => {
+        toastEl.classList.remove("toast-visible");
+      }, 2200);
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    undoBtn.addEventListener("click", undo);
+    resetBtn.addEventListener("click", resetPrototype);
+    topResetBtn.addEventListener("click", resetPrototype);
+    saveBtn.addEventListener("click", saveNotes);
+    addSectionBtn.addEventListener("click", addSection);
+
+    newSectionInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        addSection();
+      }
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
