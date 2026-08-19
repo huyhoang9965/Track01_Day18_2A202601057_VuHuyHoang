@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Option A — User-led Organized Notes</title>
+  <title>Phương án A — Ghi chú do người học tự tổ chức</title>
   <link rel="stylesheet" href="option-a.css" />
 </head>
 
@@ -12,18 +12,18 @@
     <!-- HEADER -->
     <header class="page-header">
       <div class="header-copy">
-        <p class="eyebrow">TRACK 1 · DAY 18 · CASE B — AI NOTES</p>
-        <h1>Option A — User-led Organized Notes</h1>
+        <p class="eyebrow">LỘ TRÌNH 1 · NGÀY 18 · TÌNH HUỐNG B — GHI CHÚ AI</p>
+        <h1>Phương án A — Ghi chú do người học tự tổ chức</h1>
         <p class="subtitle">
-          Bạn tự chọn và tổ chức learning traces. AI không tự phân loại,
+          Bạn tự chọn và tổ chức các ghi chú học tập. AI không tự phân loại,
           không tóm tắt và không tạo nội dung mới.
         </p>
       </div>
 
       <div class="header-actions">
-        <span class="ai-mode-badge">AI: Don't Act</span>
+        <span class="ai-mode-badge">AI: Không tự hành động</span>
         <button id="topResetBtn" class="btn btn-secondary" type="button">
-          Reset
+          Đặt lại
         </button>
       </div>
     </header>
@@ -31,10 +31,10 @@
     <!-- LESSON CONTEXT -->
     <section class="lesson-banner" aria-labelledby="lesson-title">
       <div>
-        <p class="lesson-kicker">LESSON COMPLETED</p>
-        <h2 id="lesson-title">Monitoring, Logging &amp; Observability</h2>
+        <p class="lesson-kicker">ĐÃ HOÀN THÀNH BÀI HỌC</p>
+        <h2 id="lesson-title">Giám sát, Ghi log &amp; Khả năng quan sát</h2>
         <p class="lesson-description">
-          Bạn đã lưu <strong>6 learning traces</strong>.
+          Bạn đã lưu <strong>6 ghi chú học tập</strong>.
           Hãy tự tổ chức chúng thành một bộ ghi chú để dùng lại khi ôn tập.
         </p>
       </div>
@@ -65,8 +65,8 @@
           <div class="panel-title-wrap">
             <span class="step-number">1</span>
             <div>
-              <h3>Original Learning Traces</h3>
-              <p>Kéo card sang một section ở bên phải.</p>
+              <h3>Các ghi chú học tập ban đầu</h3>
+              <p>Kéo thẻ sang một nhóm ở bên phải.</p>
             </div>
           </div>
 
@@ -84,7 +84,7 @@
           <div class="panel-title-wrap">
             <span class="step-number">2</span>
             <div>
-              <h3>Your Organized Notes</h3>
+              <h3>Ghi chú đã được bạn tổ chức</h3>
               <p>Tự quyết định cấu trúc phù hợp với cách bạn ôn tập.</p>
             </div>
           </div>
@@ -95,7 +95,7 @@
             type="button"
             disabled
           >
-            Undo
+            Hoàn tác
           </button>
         </div>
 
@@ -106,8 +106,8 @@
         <!-- ADD SECTION -->
         <div class="add-section-box">
           <div>
-            <label for="newSectionInput">Tạo section mới</label>
-            <p>Ví dụ: Exam Checklist, Important Metrics, Review Later...</p>
+            <label for="newSectionInput">Tạo nhóm mới</label>
+            <p>Ví dụ: Nội dung ôn thi, Chỉ số quan trọng, Xem lại sau...</p>
           </div>
 
           <div class="add-section-controls">
@@ -115,10 +115,10 @@
               id="newSectionInput"
               type="text"
               maxlength="40"
-              placeholder="Tên section mới"
+              placeholder="Tên nhóm mới"
             />
             <button id="addSectionBtn" class="btn btn-secondary" type="button">
-              + Add section
+              + Thêm nhóm
             </button>
           </div>
         </div>
@@ -127,10 +127,10 @@
         <div class="control-recovery-card">
           <div class="control-icon">✓</div>
           <div>
-            <strong>Control &amp; Recovery</strong>
+            <strong>Kiểm soát &amp; Khôi phục</strong>
             <p>
-              Nội dung gốc luôn được giữ lại. Bạn có thể Undo thao tác gần nhất,
-              đưa từng trace về danh sách gốc hoặc Reset toàn bộ prototype.
+              Nội dung gốc luôn được giữ lại. Bạn có thể hoàn tác thao tác gần nhất,
+              đưa từng dấu vết về danh sách gốc hoặc đặt lại toàn bộ nguyên mẫu.
             </p>
           </div>
         </div>
@@ -139,16 +139,16 @@
         <footer class="action-footer">
           <div class="status-area">
             <span id="statusMessage" class="status-message">
-              Kéo một learning trace sang section để bắt đầu.
+              Kéo một dấu vết học tập sang nhóm để bắt đầu.
             </span>
           </div>
 
           <div class="footer-buttons">
             <button id="resetBtn" class="btn btn-secondary" type="button">
-              Reset to original
+              Đặt lại về ban đầu
             </button>
             <button id="saveBtn" class="btn btn-primary" type="button" disabled>
-              Save Notes
+              Lưu ghi chú
             </button>
           </div>
         </footer>
@@ -157,9 +157,9 @@
 
     <!-- PROTOTYPE NOTE -->
     <section class="prototype-note">
-      <strong>Prototype scope:</strong>
-      Option A kiểm tra một cơ chế <em>user-led / no-inference</em>:
-      learner tự tổ chức toàn bộ nội dung, AI không đưa ra đề xuất.
+      <strong>Phạm vi nguyên mẫu:</strong>
+      Phương án A kiểm tra cơ chế <em>người dùng dẫn dắt / không suy luận</em>:
+      người học tự tổ chức toàn bộ nội dung, AI không đưa ra đề xuất.
     </section>
   </main>
 
@@ -168,65 +168,65 @@
 
   <script>
     // =========================================================
-    // OPTION A — USER-LED ORGANIZED NOTES
-    // Native HTML/CSS/JavaScript — no framework, no API.
+    // PHƯƠNG ÁN A — GHI CHÚ DO NGƯỜI HỌC TỰ TỔ CHỨC
+    // HTML/CSS/JavaScript thuần — không framework, không API.
     // =========================================================
 
     const TRACE_DATA = [
       {
         id: "trace-1",
-        type: "Highlight",
-        title: "P95 latency",
+        type: "Đánh dấu",
+        title: "Độ trễ P95",
         detail:
-          "P95 latency represents the latency threshold under which 95% of requests complete.",
-        source: "Latency Metrics · Highlight 01"
+          "Độ trễ P95 là ngưỡng mà 95% yêu cầu hoàn thành trong hoặc dưới mức đó.",
+        source: "Chỉ số độ trễ · Đánh dấu 01"
       },
       {
         id: "trace-2",
-        type: "Highlight",
-        title: "Average latency",
+        type: "Đánh dấu",
+        title: "Độ trễ trung bình",
         detail:
-          "Average latency can hide a small number of very slow requests.",
-        source: "Latency Metrics · Highlight 02"
+          "Độ trễ trung bình có thể che giấu một số ít yêu cầu rất chậm.",
+        source: "Chỉ số độ trễ · Đánh dấu 02"
       },
       {
         id: "trace-3",
         type: "Chưa hiểu",
-        title: "Percentile",
+        title: "Phân vị (Percentile)",
         detail:
           "Khái niệm cần xem lại trước khi ôn P50, P95 và P99.",
-        source: "Latency Metrics · Marked as “Chưa hiểu”"
+        source: "Chỉ số độ trễ · Được đánh dấu “Chưa hiểu”"
       },
       {
         id: "trace-4",
-        type: "Question",
-        title: "Tại sao dùng P95 thay vì average latency?",
+        type: "Câu hỏi",
+        title: "Tại sao dùng P95 thay vì độ trễ trung bình?",
         detail:
           "Câu hỏi cá nhân được ghi lại trong lúc học.",
-        source: "My Question · Question 01"
+        source: "Câu hỏi của tôi · Câu hỏi 01"
       },
       {
         id: "trace-5",
-        type: "Note",
-        title: "P95 giúp nhìn thấy tail latency.",
+        type: "Ghi chú",
+        title: "P95 giúp nhìn thấy độ trễ ở phần đuôi phân phối.",
         detail:
-          "Ghi chú ngắn của learner.",
-        source: "My Notes · Note 01"
+          "Ghi chú ngắn của người học.",
+        source: "Ghi chú của tôi · Ghi chú 01"
       },
       {
         id: "trace-6",
-        type: "Note",
+        type: "Ghi chú",
         title: "Cần xem lại P50 / P95 / P99",
         detail:
-          "So sánh ba percentile trước khi ôn tập.",
-        source: "My Notes · Note 02"
+          "So sánh ba phân vị trước khi ôn tập.",
+        source: "Ghi chú của tôi · Ghi chú 02"
       }
     ];
 
     const DEFAULT_SECTIONS = [
-      { id: "key-concepts", title: "Key Concepts", traceIds: [] },
-      { id: "need-review", title: "Need to Review", traceIds: [] },
-      { id: "my-questions", title: "My Questions", traceIds: [] }
+      { id: "key-concepts", title: "Khái niệm chính", traceIds: [] },
+      { id: "need-review", title: "Cần xem lại", traceIds: [] },
+      { id: "my-questions", title: "Câu hỏi của tôi", traceIds: [] }
     ];
 
     let sections = cloneSections(DEFAULT_SECTIONS);
@@ -276,9 +276,9 @@
     }
 
     function badgeClass(type) {
-      if (type === "Highlight") return "badge-highlight";
+      if (type === "Đánh dấu") return "badge-highlight";
       if (type === "Chưa hiểu") return "badge-unknown";
-      if (type === "Question") return "badge-question";
+      if (type === "Câu hỏi") return "badge-question";
       return "badge-note";
     }
 
@@ -354,7 +354,7 @@
           <div class="empty-state">
             <div class="empty-check">✓</div>
             <h4>Đã tổ chức hết</h4>
-            <p>Tất cả learning traces đã được đưa vào các section.</p>
+            <p>Tất cả dấu vết học tập đã được đưa vào các nhóm.</p>
           </div>
         `;
         return;
@@ -378,7 +378,7 @@
         sectionHeader.innerHTML = `
           <div>
             <h4>${escapeHtml(section.title)}</h4>
-            <span>${section.traceIds.length} items</span>
+            <span>${section.traceIds.length} mục</span>
           </div>
 
           <div class="section-actions">
@@ -386,7 +386,7 @@
               class="section-action-btn rename-section-btn"
               type="button"
             >
-              Edit
+              Sửa
             </button>
 
             ${
@@ -396,7 +396,7 @@
                     class="section-action-btn delete-section-btn"
                     type="button"
                   >
-                    Delete
+                    Xóa
                   </button>
                 `
                 : ""
@@ -449,7 +449,7 @@
           dropZone.innerHTML = `
             <div class="drop-placeholder">
               <span>＋</span>
-              <p>Thả learning trace vào đây</p>
+              <p>Thả dấu vết học tập vào đây</p>
             </div>
           `;
         } else {
@@ -482,11 +482,11 @@
       saveBtn.disabled = assignedCount === 0;
 
       if (isSaved) {
-        statusMessageEl.textContent = "✓ Notes đã được lưu";
+        statusMessageEl.textContent = "✓ Ghi chú đã được lưu";
         statusMessageEl.className = "status-message status-saved";
       } else if (assignedCount === 0) {
         statusMessageEl.textContent =
-          "Kéo một learning trace sang section để bắt đầu.";
+          "Kéo một dấu vết học tập sang nhóm để bắt đầu.";
         statusMessageEl.className = "status-message";
       } else {
         statusMessageEl.textContent =
@@ -547,7 +547,7 @@
       if (!section) return;
 
       const newTitle = window
-        .prompt("Tên section mới:", section.title)
+        .prompt("Tên nhóm mới:", section.title)
         ?.trim();
 
       if (!newTitle || newTitle === section.title) return;
@@ -572,7 +572,7 @@
 
       if (section.traceIds.length > 0) {
         const confirmed = window.confirm(
-          "Section này đang có nội dung. Xóa section sẽ đưa các learning trace về danh sách gốc. Tiếp tục?"
+          "Nhóm này đang có nội dung. Xóa nhóm sẽ đưa các dấu vết học tập về danh sách gốc. Tiếp tục?"
         );
 
         if (!confirmed) return;
@@ -592,7 +592,7 @@
 
       if (!title) {
         newSectionInput.focus();
-        showToast("Hãy nhập tên section.");
+        showToast("Hãy nhập tên nhóm.");
         return;
       }
 
@@ -607,7 +607,7 @@
 
       newSectionInput.value = "";
       render();
-      showToast("Đã tạo section mới.");
+      showToast("Đã tạo nhóm mới.");
     }
 
     function undo() {
@@ -629,7 +629,7 @@
 
       if (hasChanges) {
         const confirmed = window.confirm(
-          "Bạn muốn đưa prototype về trạng thái ban đầu?"
+          "Bạn muốn đưa nguyên mẫu về trạng thái ban đầu?"
         );
 
         if (!confirmed) return;
@@ -644,7 +644,7 @@
       localStorage.removeItem("day18-option-a-notes");
 
       render();
-      showToast("Đã reset prototype.");
+      showToast("Đã đặt lại nguyên mẫu.");
     }
 
     function saveNotes() {
@@ -664,7 +664,7 @@
 
       isSaved = true;
       renderStatus();
-      showToast("Đã lưu cấu trúc note trên trình duyệt.");
+      showToast("Đã lưu cấu trúc ghi chú trên trình duyệt.");
     }
 
     function showToast(message) {

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phương án C — Ghi chú cá nhân do AI tạo</title>
+  <link rel="stylesheet" href="option-c.css" />
+</head>
+
+<body>
+  <main class="page">
+    <!-- PHẦN ĐẦU TRANG -->
+    <header class="header">
+      <div class="header-copy">
+        <p class="eyebrow">LỘ TRÌNH 1 · NGÀY 18 · TÌNH HUỐNG B — GHI CHÚ AI</p>
+        <h1>Phương án C — Ghi chú cá nhân do AI tạo</h1>
+        <p class="subtitle">
+          AI sử dụng các phần đánh dấu, ghi chú, câu hỏi và mục “Chưa hiểu” để tạo
+          một bản Ghi chú học tập cá nhân dạng bản nháp. Bạn kiểm tra, chỉnh sửa và
+          quyết định trước khi lưu.
+        </p>
+      </div>
+
+      <div class="header-actions">
+        <span class="ai-badge">AI: Hành động sau khi người dùng kích hoạt</span>
+        <button id="resetTopBtn" class="btn secondary" type="button">
+          Đặt lại
+        </button>
+      </div>
+    </header>
+
+    <!-- BỐI CẢNH BÀI HỌC -->
+    <section class="lesson">
+      <div>
+        <p class="lesson-label">ĐÃ HOÀN THÀNH BÀI HỌC</p>
+        <h2>Giám sát, Ghi log &amp; Khả năng quan sát</h2>
+        <p>
+          Bạn đã lưu <strong>6  ghi chú học tập</strong>. AI có thể dùng các
+          nội dung này để tạo một bản ghi chú có cấu trúc.
+        </p>
+      </div>
+
+      <div class="progress">
+        <strong id="traceCount">6</strong>
+        <span>ghi chú học tập</span>
+      </div>
+    </section>
+
+    <!-- KỲ VỌNG + GIỚI HẠN -->
+    <section class="expectation-grid">
+      <article class="info-card">
+        <div class="icon purple">AI</div>
+        <div>
+          <strong>AI sẽ làm gì?</strong>
+          <p>
+            Thu thập → Nhóm → Tóm tắt → Tạo một bản Ghi chú học tập cá nhân
+            dạng bản nháp từ các ghi chú học tập của bài học.
+          </p>
+        </div>
+      </article>
+
+      <article class="info-card warning">
+        <div class="icon amber">!</div>
+        <div>
+          <strong>AI có thể sai</strong>
+          <p>
+            AI có thể hiểu sai lý do bạn đánh dấu, bỏ sót nội dung quan trọng
+            hoặc tóm tắt khác với ý bạn. Hãy kiểm tra trước khi Lưu.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- CÁC BƯỚC -->
+    <nav class="stepper" aria-label="Các bước của nguyên mẫu">
+      <div class="step active" data-step="1">
+        <span>1</span>
+        <div>
+          <strong>Tạo ghi chú</strong>
+          <small>Kích hoạt AI</small>
+        </div>
+      </div>
+
+      <i></i>
+
+      <div class="step" data-step="2">
+        <span>2</span>
+        <div>
+          <strong>Bản nháp AI</strong>
+          <small>AI tạo ghi chú</small>
+        </div>
+      </div>
+
+      <i></i>
+
+      <div class="step" data-step="3">
+        <span>3</span>
+        <div>
+          <strong>Kiểm tra</strong>
+          <small>Sửa / Tạo lại / Từ chối</small>
+        </div>
+      </div>
+    </nav>
+
+    <!-- KHU VỰC LÀM VIỆC -->
+    <section class="workspace">
+      <!-- BÊN TRÁI: DỮ LIỆU ĐƯỢC SỬ DỤNG -->
+      <aside class="panel source-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span class="number">1</span>
+            <div>
+              <h3>Các dấu vết học tập được sử dụng</h3>
+              <p>Đây là dữ liệu AI sẽ dùng để tạo bản nháp.</p>
+            </div>
+          </div>
+
+          <span class="state-badge ready">Sẵn sàng</span>
+        </div>
+
+        <div id="traceList" class="trace-list"></div>
+
+        <div class="privacy-note">
+          <div class="privacy-icon">✓</div>
+          <div>
+            <strong>Phạm vi dữ liệu</strong>
+            <p>
+              Nguyên mẫu chỉ dùng 6 dấu vết học tập của bài học hiện tại.
+              Không dùng lịch sử học tập khác.
+            </p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- BÊN PHẢI: TẠO + BẢN NHÁP -->
+      <section class="panel draft-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <span class="number">2</span>
+            <div>
+              <h3>Ghi chú cá nhân do AI tạo</h3>
+              <p>AI tạo bản nháp; bạn luôn kiểm tra trước khi lưu.</p>
+            </div>
+          </div>
+
+          <span id="draftState" class="state-badge waiting">Đang chờ</span>
+        </div>
+
+        <!-- BAN ĐẦU / ĐANG TẢI / BẢN NHÁP -->
+        <div id="draftArea" class="draft-area">
+          <div class="empty-draft">
+            <div class="empty-ai">AI</div>
+            <h4>Chưa tạo Ghi chú học tập cá nhân</h4>
+            <p>
+              AI sẽ dùng 6 dấu vết học tập bên trái để tạo một bản nháp có
+              cấu trúc.
+            </p>
+
+            <div class="capability-box">
+              <strong>Khả năng của AI</strong>
+              <ul>
+                <li>Gom các dấu vết học tập liên quan</li>
+                <li>Tóm tắt nội dung</li>
+                <li>Tạo nhóm có cấu trúc</li>
+                <li>Gắn nguồn cho từng nhóm</li>
+              </ul>
+            </div>
+
+            <button id="generateBtn" class="btn primary generate-btn" type="button">
+              Tạo ghi chú của tôi
+            </button>
+
+            <p class="draft-warning">
+              Bản nháp do AI tạo · Kiểm tra trước khi lưu
+            </p>
+          </div>
+        </div>
+
+        <!-- KIỂM SOÁT / KHÔI PHỤC -->
+        <div class="control-box">
+          <div class="control-icon">✓</div>
+          <div>
+            <strong>Bạn giữ quyền quyết định cuối cùng</strong>
+            <p>
+              Có thể Sửa, Tạo lại hoặc Xóa từng nhóm. Nếu bản nháp không
+              phù hợp, dùng Từ chối bản nháp để quay về các dấu vết học tập ban đầu.
+            </p>
+          </div>
+        </div>
+
+        <!-- CHÂN KHU VỰC -->
+        <footer class="action-footer">
+          <span id="statusMessage">
+            AI chưa tạo hoặc lưu nội dung nào.
+          </span>
+
+          <div class="footer-actions">
+            <button id="rejectBtn" class="btn secondary" type="button" disabled>
+              Từ chối bản nháp
+            </button>
+            <button id="saveBtn" class="btn primary" type="button" disabled>
+              Lưu ghi chú
+            </button>
+          </div>
+        </footer>
+      </section>
+    </section>
+
+    <!-- KẾT QUẢ CUỐI -->
+    <section id="finalResult" class="final-result hidden">
+      <div class="final-head">
+        <div>
+          <p class="eyebrow">KẾT QUẢ</p>
+          <h2>Ghi chú học tập cá nhân</h2>
+          <p>
+            Bản ghi chú đã được người học kiểm tra trước khi lưu.
+          </p>
+        </div>
+
+        <span class="reviewed-badge">Đã được người dùng kiểm tra</span>
+      </div>
+
+      <div id="finalCards" class="final-grid"></div>
+    </section>
+
+    <!-- GHI CHÚ NGUYÊN MẪU -->
+    <section class="prototype-note">
+      <strong>Phạm vi nguyên mẫu:</strong>
+      Phương án C kiểm tra cơ chế <em>AI tạo bản nháp / người dùng kiểm tra</em>.
+      AI thực hiện phần lớn công việc tạo đầu ra nhưng không tự lưu.
+    </section>
+  </main>
+
+  <!-- HỘP THOẠI NGUỒN -->
+  <div id="sourceModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <p>NGUỒN BẰNG CHỨNG</p>
+          <h3 id="sourceModalTitle">Nguồn</h3>
+        </div>
+        <button id="sourceModalClose" type="button">×</button>
+      </div>
+
+      <div id="sourceModalBody" class="modal-body"></div>
+
+      <div class="modal-footer">
+        <button id="sourceModalDone" class="btn primary" type="button">
+          Xong
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HỘP THOẠI CHỈNH SỬA -->
+  <div id="editModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <p>SỬA NHÓM DO AI TẠO</p>
+          <h3>Chỉnh sửa nhóm</h3>
+        </div>
+        <button id="editModalClose" type="button">×</button>
+      </div>
+
+      <div class="modal-body">
+        <label for="editTitle">Tiêu đề nhóm</label>
+        <input id="editTitle" type="text" maxlength="60" />
+
+        <label for="editContent">Nội dung</label>
+        <textarea id="editContent" rows="8"></textarea>
+
+        <div class="edit-note">
+          <strong>Lưu ý:</strong>
+          Sau khi Sửa, nhóm được xem là nội dung đã được người dùng kiểm tra.
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="editCancel" class="btn secondary" type="button">
+          Hủy
+        </button>
+        <button id="editApply" class="btn primary" type="button">
+          Áp dụng chỉnh sửa
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HỘP THOẠI XÁC NHẬN TẠO LẠI -->
+  <div id="regenModal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card compact">
+      <div class="modal-head">
+        <div>
+          <p>TẠO LẠI NHÓM</p>
+          <h3>Tạo một phiên bản khác?</h3>
+        </div>
+        <button id="regenModalClose" type="button">×</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="regen-copy">
+          AI sẽ dùng lại các nguồn hiện tại và tạo một phiên bản nội dung khác
+          cho nhóm này. Sau khi bấm <strong>Tạo lại</strong>, phần nội dung
+          trong nhóm sẽ thay đổi và số phiên bản sẽ tăng.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button id="regenCancel" class="btn secondary" type="button">
+          Hủy
+        </button>
+        <button id="regenApply" class="btn primary" type="button">
+          Tạo lại
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- THÔNG BÁO NHANH -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // =========================================================
+    // PHƯƠNG ÁN C — GHI CHÚ CÁ NHÂN DO AI TẠO
+    // Đầu ra AI mô phỏng sẵn để kiểm thử nguyên mẫu.
+    // Không cần API bên ngoài hoặc mô hình thật.
+    // =========================================================
+
+    const TRACE_DATA = [
+      {
+        id: "t1",
+        type: "Highlight",
+        title: "Độ trễ P95",
+        detail:
+          "Độ trễ P95 là ngưỡng mà 95% yêu cầu hoàn thành trong hoặc dưới mức đó.",
+        source: "Chỉ số độ trễ · Đánh dấu 01"
+      },
+      {
+        id: "t2",
+        type: "Highlight",
+        title: "Độ trễ trung bình",
+        detail:
+          "Độ trễ trung bình có thể che giấu một số ít yêu cầu rất chậm.",
+        source: "Chỉ số độ trễ · Đánh dấu 02"
+      },
+      {
+        id: "t3",
+        type: "Chưa hiểu",
+        title: "Phân vị (Percentile)",
+        detail:
+          "Khái niệm cần xem lại trước khi ôn P50, P95 và P99.",
+        source: "Chỉ số độ trễ · Được đánh dấu “Chưa hiểu”"
+      },
+      {
+        id: "t4",
+        type: "Question",
+        title: "Tại sao dùng P95 thay vì độ trễ trung bình?",
+        detail:
+          "Câu hỏi cá nhân được ghi lại trong lúc học.",
+        source: "Câu hỏi của tôi · Câu hỏi 01"
+      },
+      {
+        id: "t5",
+        type: "Note",
+        title: "P95 giúp nhìn thấy độ trễ ở phần đuôi phân phối.",
+        detail:
+          "Ghi chú ngắn của người học.",
+        source: "Ghi chú của tôi · Ghi chú 01"
+      },
+      {
+        id: "t6",
+        type: "Note",
+        title: "Cần xem lại P50 / P95 / P99",
+        detail:
+          "So sánh ba phân vị trước khi ôn tập.",
+        source: "Ghi chú của tôi · Ghi chú 02"
+      }
+    ];
+
+    const DRAFT_TEMPLATE = [
+      {
+        id: "s1",
+        title: "1. Khái niệm chính — Độ trễ P95",
+        content:
+          "Độ trễ P95 là ngưỡng mà 95% yêu cầu hoàn thành trong hoặc dưới mức đó. Chỉ số này giúp quan sát độ trễ ở phần đuôi phân phối tốt hơn so với chỉ nhìn độ trễ trung bình.",
+        sourceIds: ["t1", "t5"],
+        uncertainty: "",
+        userEdited: false,
+        regenerated: 0
+      },
+      {
+        id: "s2",
+        title: "2. Tại sao không chỉ dùng độ trễ trung bình?",
+        content:
+          "Độ trễ trung bình có thể che giấu một số yêu cầu rất chậm. P95 giúp người học nhìn thấy trải nghiệm của phần lớn yêu cầu mà không để một vài giá trị cực đoan làm lu mờ hành vi ở phần đuôi phân phối.",
+        sourceIds: ["t2", "t4"],
+        uncertainty:
+          "Phần giải thích này được AI suy luận từ phần đánh dấu và câu hỏi của người học.",
+        userEdited: false,
+        regenerated: 0
+      },
+      {
+        id: "s3",
+        title: "3. Cần xem lại — Phân vị",
+        content:
+          "Cần xem lại khái niệm phân vị và sự khác nhau giữa P50, P95 và P99 trước khi tiếp tục ôn phần chỉ số độ trễ.",
+        sourceIds: ["t3", "t6"],
+        uncertainty:
+          "AI chưa biết người học đang thiếu phần định nghĩa phân vị hay cách áp dụng phân vị vào độ trễ.",
+        userEdited: false,
+        regenerated: 0
+      }
+    ];
+
+    const ALT_CONTENT = {
+      s1: [
+        "Độ trễ P95 cho biết 95% yêu cầu có độ trễ không vượt quá ngưỡng này. Chỉ số này hữu ích khi muốn quan sát phần đuôi của phân phối độ trễ thay vì chỉ nhìn giá trị trung bình.",
+        "P95 là một chỉ số phân vị: 95% yêu cầu nhanh hơn hoặc bằng giá trị P95, còn 5% yêu cầu còn lại chậm hơn. Điều này giúp nhận diện độ trễ ở phần đuôi phân phối."
+      ],
+      s2: [
+        "Độ trễ trung bình chỉ mô tả giá trị trung bình và có thể không phản ánh nhóm yêu cầu chậm. P95 cho thấy ngưỡng trải nghiệm của 95% yêu cầu, nên hữu ích hơn khi theo dõi hiệu năng thực tế.",
+        "Một vài yêu cầu rất chậm có thể bị che khuất khi chỉ nhìn giá trị trung bình. P95 cho phép tập trung vào phân phối và hành vi ở phần đuôi thay vì chỉ một con số trung bình."
+      ],
+      s3: [
+        "Ôn lại phân vị trước: P50 là trung vị, P95 là ngưỡng của 95% dữ liệu và P99 gần phần đuôi hơn. Sau đó quay lại so sánh các chỉ số độ trễ.",
+        "Cần củng cố cách đọc phân vị: với P95, 95% giá trị nằm ở hoặc dưới ngưỡng này. Sau đó so sánh P50, P95 và P99 để hiểu độ trễ ở phần đuôi phân phối."
+      ]
+    };
+
+    let draft = [];
+    let editingSectionId = null;
+    let regeneratingSectionId = null;
+    let saved = false;
+
+    const el = (id) => document.getElementById(id);
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function getTrace(id) {
+      return TRACE_DATA.find((trace) => trace.id === id);
+    }
+
+    function badgeClass(type) {
+      if (type === "Highlight") return "highlight";
+      if (type === "Chưa hiểu") return "unknown";
+      if (type === "Question") return "question";
+      return "note";
+    }
+
+    function typeLabel(type) {
+      const labels = {
+        "Highlight": "Đánh dấu",
+        "Chưa hiểu": "Chưa hiểu",
+        "Question": "Câu hỏi",
+        "Note": "Ghi chú"
+      };
+
+      return labels[type] || type;
+    }
+
+    function cloneDraft(items) {
+      return items.map((item) => ({
+        ...item,
+        sourceIds: [...item.sourceIds]
+      }));
+    }
+
+    function setStep(stepNumber) {
+      document.querySelectorAll(".step").forEach((step) => {
+        const value = Number(step.dataset.step);
+
+        step.classList.toggle("active", value === stepNumber);
+        step.classList.toggle("done", value < stepNumber);
+      });
+    }
+
+    function renderTraceList() {
+      el("traceList").innerHTML = TRACE_DATA.map((trace) => `
+        <article class="trace-card">
+          <div class="trace-top">
+            <span class="type ${badgeClass(trace.type)}">
+              ${escapeHtml(typeLabel(trace.type))}
+            </span>
+            <span class="source-lock">Nguồn</span>
+          </div>
+
+          <h4>${escapeHtml(trace.title)}</h4>
+          <p>${escapeHtml(trace.detail)}</p>
+          <small>${escapeHtml(trace.source)}</small>
+        </article>
+      `).join("");
+    }
+
+    function generateDraft() {
+      el("draftState").textContent = "Đang tạo";
+      el("draftState").className = "state-badge generating";
+
+      el("draftArea").innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <h4>AI đang tạo Ghi chú học tập cá nhân...</h4>
+          <p>
+            Nguyên mẫu sử dụng đầu ra AI mô phỏng sẵn, không gọi mô hình thật.
+          </p>
+
+          <div class="loading-steps">
+            <span class="active">Thu thập dấu vết</span>
+            <span>Nhóm nội dung liên quan</span>
+            <span>Tóm tắt</span>
+            <span>Tạo bản nháp</span>
+          </div>
+        </div>
+      `;
+
+      setStep(2);
+
+      setTimeout(() => {
+        draft = cloneDraft(DRAFT_TEMPLATE);
+        saved = false;
+
+        el("draftState").textContent = "Cần kiểm tra";
+        el("draftState").className = "state-badge review";
+
+        renderDraft();
+        renderFinal();
+        renderFooter();
+        setStep(3);
+      }, 850);
+    }
+
+    function renderDraft() {
+      const area = el("draftArea");
+
+      if (!draft.length) {
+        area.innerHTML = `
+          <div class="empty-draft">
+            <div class="empty-ai">AI</div>
+            <h4>Chưa tạo Ghi chú học tập cá nhân</h4>
+            <p>
+              AI sẽ dùng 6 dấu vết học tập bên trái để tạo một bản nháp có
+              cấu trúc.
+            </p>
+
+            <button id="generateBtnInline" class="btn primary generate-btn" type="button">
+              Tạo ghi chú của tôi
+            </button>
+
+            <p class="draft-warning">Bản nháp do AI tạo · Kiểm tra trước khi lưu</p>
+          </div>
+        `;
+
+        el("generateBtnInline").onclick = generateDraft;
+        return;
+      }
+
+      area.innerHTML = `
+        <div class="draft-intro">
+          <div>
+            <strong>AI đã tạo ${draft.length} nhóm</strong>
+            <p>
+              Kiểm tra nội dung, nguồn và mức độ không chắc chắn trước khi Lưu.
+            </p>
+          </div>
+
+          <span>Bản nháp do AI tạo · Chưa lưu</span>
+        </div>
+      `;
+
+      draft.forEach((section) => {
+        const card = document.createElement("article");
+        card.className = "draft-card";
+        card.dataset.sectionId = section.id;
+
+        const sources = section.sourceIds.map((sourceId) => {
+          const trace = getTrace(sourceId);
+
+          return `
+            <li>
+              <span class="source-dot"></span>
+              <div>
+                <strong>${escapeHtml(trace.title)}</strong>
+                <small>${escapeHtml(trace.source)}</small>
+              </div>
+            </li>
+          `;
+        }).join("");
+
+        card.innerHTML = `
+          <div class="draft-card-head">
+            <div>
+              <span class="draft-label">DO AI TẠO</span>
+              <h4>${escapeHtml(section.title)}</h4>
+            </div>
+
+            <div class="draft-meta">
+              <span class="meta-chip version">
+                Phiên bản ${section.regenerated + 1}
+              </span>
+              ${
+                section.userEdited
+                  ? '<span class="meta-chip edited">Người dùng đã sửa</span>'
+                  : ""
+              }
+              ${
+                section.regenerated > 0
+                  ? `<span class="meta-chip regenerated">Đã tạo lại ${section.regenerated}×</span>`
+                  : ""
+              }
+            </div>
+          </div>
+
+          <div class="generated-content">
+            <p>${escapeHtml(section.content)}</p>
+          </div>
+
+          <div class="source-box">
+            <div class="source-head">
+              <strong>Dựa trên ${section.sourceIds.length} nguồn</strong>
+              <button type="button" data-action="sources">
+                Xem nguồn
+              </button>
+            </div>
+
+            <ul>${sources}</ul>
+          </div>
+
+          ${
+            section.uncertainty
+              ? `
+                <div class="uncertainty">
+                  <span>!</span>
+                  <div>
+                    <strong>Cần kiểm tra</strong>
+                    <p>${escapeHtml(section.uncertainty)}</p>
+                  </div>
+                </div>
+              `
+              : ""
+          }
+
+          <div class="draft-actions">
+            <button class="btn secondary small" data-action="delete">
+              Xóa nhóm
+            </button>
+            <button class="btn secondary small" data-action="edit">
+              Sửa
+            </button>
+            <button class="btn secondary small" data-action="regen">
+              Tạo lại
+            </button>
+          </div>
+        `;
+
+        card.querySelector('[data-action="sources"]').onclick = () =>
+          openSourceModal(section.id);
+
+        card.querySelector('[data-action="edit"]').onclick = () =>
+          openEditModal(section.id);
+
+        card.querySelector('[data-action="regen"]').onclick = () =>
+          openRegenModal(section.id);
+
+        card.querySelector('[data-action="delete"]').onclick = () =>
+          deleteSection(section.id);
+
+        area.appendChild(card);
+      });
+    }
+
+    function openSourceModal(sectionId) {
+      const section = draft.find((item) => item.id === sectionId);
+      if (!section) return;
+
+      el("sourceModalTitle").textContent = section.title;
+
+      el("sourceModalBody").innerHTML = section.sourceIds.map((sourceId) => {
+        const trace = getTrace(sourceId);
+
+        return `
+          <article class="source-modal-card">
+            <span class="type ${badgeClass(trace.type)}">
+              ${escapeHtml(typeLabel(trace.type))}
+            </span>
+            <h4>${escapeHtml(trace.title)}</h4>
+            <p>${escapeHtml(trace.detail)}</p>
+            <small>${escapeHtml(trace.source)}</small>
+          </article>
+        `;
+      }).join("");
+
+      el("sourceModal").classList.remove("hidden");
+    }
+
+    function closeSourceModal() {
+      el("sourceModal").classList.add("hidden");
+    }
+
+    function openEditModal(sectionId) {
+      const section = draft.find((item) => item.id === sectionId);
+      if (!section) return;
+
+      editingSectionId = sectionId;
+      el("editTitle").value = section.title;
+      el("editContent").value = section.content;
+      el("editModal").classList.remove("hidden");
+      el("editTitle").focus();
+    }
+
+    function closeEditModal() {
+      editingSectionId = null;
+      el("editModal").classList.add("hidden");
+    }
+
+    function applyEdit() {
+      const section = draft.find((item) => item.id === editingSectionId);
+      if (!section) return;
+
+      const title = el("editTitle").value.trim();
+      const content = el("editContent").value.trim();
+
+      if (!title) {
+        showToast("Tiêu đề nhóm không được để trống.");
+        return;
+      }
+
+      if (!content) {
+        showToast("Nội dung không được để trống.");
+        return;
+      }
+
+      draft = draft.map((item) =>
+        item.id === editingSectionId
+          ? {
+              ...item,
+              title,
+              content,
+              userEdited: true
+            }
+          : item
+      );
+
+      saved = false;
+      closeEditModal();
+      renderDraft();
+      renderFinal();
+      renderFooter();
+
+      showToast("Đã áp dụng chỉnh sửa của người dùng.");
+    }
+
+    function openRegenModal(sectionId) {
+      regeneratingSectionId = sectionId;
+      el("regenModal").classList.remove("hidden");
+    }
+
+    function closeRegenModal() {
+      regeneratingSectionId = null;
+      el("regenModal").classList.add("hidden");
+    }
+
+    function applyRegenerate() {
+      const section = draft.find((item) => item.id === regeneratingSectionId);
+      if (!section) return;
+
+      const sectionId = regeneratingSectionId;
+      const options = ALT_CONTENT[section.id] || [];
+
+      closeRegenModal();
+
+      // Hiển thị rõ trạng thái tạo lại để người kiểm thử biết AI đang hoạt động.
+      const targetCard = document.querySelector(
+        `[data-section-id="${sectionId}"]`
+      );
+
+      if (targetCard) {
+        targetCard.classList.add("is-regenerating");
+      }
+
+      showToast("AI đang tạo một phiên bản mới...");
+
+      setTimeout(() => {
+        const current = draft.find((item) => item.id === sectionId);
+        if (!current) return;
+
+        const nextIndex = current.regenerated % options.length;
+        const nextContent = options[nextIndex] || current.content;
+
+        draft = draft.map((item) =>
+          item.id === sectionId
+            ? {
+                ...item,
+                content: nextContent,
+                regenerated: item.regenerated + 1,
+                userEdited: false
+              }
+            : item
+        );
+
+        saved = false;
+        renderDraft();
+        renderFinal();
+        renderFooter();
+
+        const refreshedCard = document.querySelector(
+          `[data-section-id="${sectionId}"]`
+        );
+
+        if (refreshedCard) {
+          refreshedCard.classList.add("just-regenerated");
+          setTimeout(
+            () => refreshedCard.classList.remove("just-regenerated"),
+            1200
+          );
+        }
+
+        showToast(
+          `Đã tạo Phiên bản ${current.regenerated + 2}. Nội dung nhóm đã thay đổi.`
+        );
+      }, 650);
+    }
+
+    function deleteSection(sectionId) {
+      const section = draft.find((item) => item.id === sectionId);
+      if (!section) return;
+
+      const confirmed = window.confirm(
+        `Xóa "${section.title}" khỏi bản nháp AI?`
+      );
+
+      if (!confirmed) return;
+
+      draft = draft.filter((item) => item.id !== sectionId);
+      saved = false;
+
+      renderDraft();
+      renderFinal();
+      renderFooter();
+
+      showToast("Đã xóa nhóm khỏi bản nháp.");
+    }
+
+    function rejectDraft() {
+      if (!draft.length) return;
+
+      const confirmed = window.confirm(
+        "Từ chối toàn bộ bản nháp do AI tạo và quay lại các dấu vết học tập ban đầu?"
+      );
+
+      if (!confirmed) return;
+
+      draft = [];
+      saved = false;
+
+      el("draftState").textContent = "Đang chờ";
+      el("draftState").className = "state-badge waiting";
+
+      renderDraft();
+      renderFinal();
+      renderFooter();
+      setStep(1);
+
+      showToast("Đã từ chối bản nháp AI.");
+    }
+
+    function renderFinal() {
+      const result = el("finalResult");
+
+      if (!draft.length) {
+        result.classList.add("hidden");
+        return;
+      }
+
+      result.classList.remove("hidden");
+
+      el("finalCards").innerHTML = draft.map((section) => `
+        <article class="final-card">
+          <div class="final-card-head">
+            <h3>${escapeHtml(section.title)}</h3>
+            <span>
+              ${section.userEdited ? "Đã sửa" : "Bản nháp AI"}
+            </span>
+          </div>
+
+          <p>${escapeHtml(section.content)}</p>
+
+          <div class="final-source-line">
+            ${section.sourceIds.length} nguồn
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderFooter() {
+      el("rejectBtn").disabled = draft.length === 0;
+      el("saveBtn").disabled = draft.length === 0;
+
+      if (saved) {
+        el("statusMessage").textContent =
+          "✓ Ghi chú đã được lưu sau khi người dùng kiểm tra.";
+        el("statusMessage").className = "saved";
+      } else if (!draft.length) {
+        el("statusMessage").textContent =
+          "AI chưa tạo hoặc lưu nội dung nào.";
+        el("statusMessage").className = "";
+      } else {
+        el("statusMessage").textContent =
+          `${draft.length} nhóm do AI tạo đang chờ người dùng kiểm tra.`;
+        el("statusMessage").className = "";
+      }
+    }
+
+    function saveNotes() {
+      if (!draft.length) return;
+
+      localStorage.setItem(
+        "day18-option-c-notes",
+        JSON.stringify({
+          savedAt: new Date().toISOString(),
+          mode: "AI-generated",
+          reviewedByUser: true,
+          sections: draft
+        })
+      );
+
+      saved = true;
+      renderFooter();
+      showToast("Đã lưu Ghi chú học tập cá nhân.");
+    }
+
+    function resetPrototype() {
+      const hasState = draft.length > 0 || saved;
+
+      if (hasState) {
+        const confirmed = window.confirm(
+          "Đặt lại Phương án C về trạng thái ban đầu?"
+        );
+
+        if (!confirmed) return;
+      }
+
+      draft = [];
+      editingSectionId = null;
+      regeneratingSectionId = null;
+      saved = false;
+
+      localStorage.removeItem("day18-option-c-notes");
+
+      el("draftState").textContent = "Đang chờ";
+      el("draftState").className = "state-badge waiting";
+
+      el("draftArea").innerHTML = `
+        <div class="empty-draft">
+          <div class="empty-ai">AI</div>
+          <h4>Chưa tạo Ghi chú học tập cá nhân</h4>
+          <p>
+            AI sẽ dùng 6 dấu vết học tập bên trái để tạo một bản nháp có
+            cấu trúc.
+          </p>
+
+          <div class="capability-box">
+            <strong>Khả năng của AI</strong>
+            <ul>
+              <li>Gom các dấu vết học tập liên quan</li>
+              <li>Tóm tắt nội dung</li>
+              <li>Tạo nhóm có cấu trúc</li>
+              <li>Gắn nguồn cho từng nhóm</li>
+            </ul>
+          </div>
+
+          <button id="generateBtnInline" class="btn primary generate-btn" type="button">
+            Tạo ghi chú của tôi
+          </button>
+
+          <p class="draft-warning">
+            Bản nháp do AI tạo · Kiểm tra trước khi lưu
+          </p>
+        </div>
+      `;
+
+      el("generateBtnInline").onclick = generateDraft;
+
+      renderFinal();
+      renderFooter();
+      setStep(1);
+
+      showToast("Đã đặt lại Phương án C.");
+    }
+
+    function showToast(message) {
+      el("toast").textContent = message;
+      el("toast").classList.add("show");
+
+      clearTimeout(showToast.timeout);
+
+      showToast.timeout = setTimeout(() => {
+        el("toast").classList.remove("show");
+      }, 2200);
+    }
+
+    // Sự kiện
+    el("generateBtn").onclick = generateDraft;
+    el("rejectBtn").onclick = rejectDraft;
+    el("saveBtn").onclick = saveNotes;
+    el("resetTopBtn").onclick = resetPrototype;
+
+    el("sourceModalClose").onclick = closeSourceModal;
+    el("sourceModalDone").onclick = closeSourceModal;
+
+    el("editModalClose").onclick = closeEditModal;
+    el("editCancel").onclick = closeEditModal;
+    el("editApply").onclick = applyEdit;
+
+    el("regenModalClose").onclick = closeRegenModal;
+    el("regenCancel").onclick = closeRegenModal;
+    el("regenApply").onclick = applyRegenerate;
+
+    el("sourceModal").onclick = (event) => {
+      if (event.target === el("sourceModal")) closeSourceModal();
+    };
+
+    el("editModal").onclick = (event) => {
+      if (event.target === el("editModal")) closeEditModal();
+    };
+
+    el("regenModal").onclick = (event) => {
+      if (event.target === el("regenModal")) closeRegenModal();
+    };
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeSourceModal();
+        closeEditModal();
+        closeRegenModal();
+      }
+    });
+
+    // Hiển thị ban đầu
+    renderTraceList();
+    renderFooter();
+    setStep(1);
+  </script>
+</body>
+</html>

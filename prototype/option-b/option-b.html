@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phương án B — AI hướng dẫn tổ chức ghi chú</title>
+  <link rel="stylesheet" href="option-b.css" />
+</head>
+
+<body>
+  <main class="page">
+
+    <!-- ===================================================== -->
+    <!-- PHẦN ĐẦU TRANG -->
+    <!-- ===================================================== -->
+    <header class="header">
+      <div>
+        <p class="eyebrow">LỘ TRÌNH 1 · NGÀY 18 · TÌNH HUỐNG B — GHI CHÚ AI</p>
+
+        <h1>Phương án B — AI hướng dẫn tổ chức ghi chú</h1>
+
+        <p class="subtitle">
+          AI xem từng dấu vết học tập, giải thích cách AI đang hiểu nội dung
+          và <strong>hỏi bạn trước khi tổ chức</strong>.
+          Bạn có thể Xác nhận, chọn nhóm khác, tạo nhóm mới hoặc Bỏ qua.
+        </p>
+      </div>
+
+      <div class="header-actions">
+        <span class="ai-mode">AI: Hỏi trước khi hành động</span>
+
+        <button
+          id="resetBtn"
+          class="btn secondary"
+          type="button"
+        >
+          Đặt lại
+        </button>
+      </div>
+    </header>
+
+
+    <!-- ===================================================== -->
+    <!-- BỐI CẢNH CHUNG -->
+    <!-- ===================================================== -->
+    <section class="lesson">
+      <div>
+        <p class="lesson-label">ĐÃ HOÀN THÀNH BÀI HỌC</p>
+
+        <h2>Giám sát, Ghi log &amp; Khả năng quan sát</h2>
+
+        <p>
+          Bạn đã lưu <strong>6 dấu vết học tập</strong>.
+          Có thể mở bất kỳ dấu vết nào trong danh sách quyết định để xử lý.
+        </p>
+      </div>
+
+      <div class="progress-box">
+        <strong id="progressText">0/6</strong>
+        <span>quyết định đã hoàn thành</span>
+      </div>
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- NGUYÊN TẮC HUMAN–AI -->
+    <!-- ===================================================== -->
+    <section class="principles">
+
+      <article>
+        <span class="principle-icon ai">AI</span>
+
+        <div>
+          <strong>AI diễn giải</strong>
+
+          <p>
+            AI đọc dấu vết và giải thích vì sao AI đề xuất một nhóm.
+          </p>
+        </div>
+      </article>
+
+
+      <article>
+        <span class="principle-icon human">BẠN</span>
+
+        <div>
+          <strong>Người dùng quyết định</strong>
+
+          <p>
+            Bạn được chọn bất kỳ nhóm nào, không bắt buộc theo đề xuất của AI.
+          </p>
+        </div>
+      </article>
+
+
+      <article>
+        <span class="principle-icon uncertain">!</span>
+
+        <div>
+          <strong>Hiển thị sự không chắc chắn</strong>
+
+          <p>
+            Nếu AI không chắc, lý do được hiển thị để bạn tự quyết định.
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- CÁC BƯỚC -->
+    <!-- ===================================================== -->
+    <nav class="stepper" aria-label="Các bước của nguyên mẫu">
+
+      <div class="step active" data-step="1">
+        <span>1</span>
+
+        <div>
+          <strong>Mở dấu vết</strong>
+          <small>Chọn bất kỳ dấu vết nào</small>
+        </div>
+      </div>
+
+      <i></i>
+
+
+      <div class="step" data-step="2">
+        <span>2</span>
+
+        <div>
+          <strong>AI hỏi</strong>
+          <small>Xem đề xuất + lý do</small>
+        </div>
+      </div>
+
+      <i></i>
+
+
+      <div class="step" data-step="3">
+        <span>3</span>
+
+        <div>
+          <strong>Người dùng quyết định</strong>
+          <small>Xác nhận / Sửa / Bỏ qua</small>
+        </div>
+      </div>
+
+      <i></i>
+
+
+      <div class="step" data-step="4">
+        <span>4</span>
+
+        <div>
+          <strong>Kiểm tra cuối</strong>
+          <small>Kiểm tra &amp; Lưu</small>
+        </div>
+      </div>
+
+    </nav>
+
+
+    <!-- ===================================================== -->
+    <!-- KHU VỰC CHÍNH -->
+    <!-- ===================================================== -->
+    <section class="workspace">
+
+      <!-- =================================================== -->
+      <!-- CỘT 1 — DANH SÁCH QUYẾT ĐỊNH -->
+      <!-- =================================================== -->
+      <aside class="panel queue-panel">
+
+        <div class="panel-header">
+          <div class="title-group">
+            <span class="panel-number">1</span>
+
+            <div>
+              <h3>Danh sách quyết định</h3>
+              <p>Bấm vào bất kỳ dấu vết nào.</p>
+            </div>
+          </div>
+
+          <span id="pendingBadge" class="badge neutral">
+            6 đang chờ
+          </span>
+        </div>
+
+
+        <div id="queueList" class="queue-list"></div>
+
+
+        <div class="queue-note">
+          <strong>Không bắt buộc theo thứ tự</strong>
+
+          <p>
+            Bạn có thể mở dấu vết 1, 4, 6... tùy ý.
+            Dấu vết đã Xác nhận vẫn có thể mở lại để sửa.
+          </p>
+        </div>
+
+      </aside>
+
+
+      <!-- =================================================== -->
+      <!-- CỘT 2 — AI HƯỚNG DẪN QUYẾT ĐỊNH -->
+      <!-- =================================================== -->
+      <section class="panel decision-panel">
+
+        <div class="panel-header">
+          <div class="title-group">
+            <span class="panel-number">2</span>
+
+            <div>
+              <h3>Quyết định có AI hướng dẫn</h3>
+              <p>AI đề xuất — người học quyết định.</p>
+            </div>
+          </div>
+
+          <span id="decisionBadge" class="badge ai-badge">
+            AI hỏi
+          </span>
+        </div>
+
+
+        <div id="decisionArea" class="decision-area"></div>
+
+
+        <footer class="decision-footer">
+
+          <button
+            id="previousBtn"
+            class="btn secondary"
+            type="button"
+          >
+            ← Dấu vết trước
+          </button>
+
+
+          <div>
+            <button
+              id="skipBtn"
+              class="btn secondary"
+              type="button"
+            >
+              Bỏ qua
+            </button>
+
+            <button
+              id="confirmBtn"
+              class="btn primary"
+              type="button"
+            >
+              Xác nhận quyết định
+            </button>
+          </div>
+
+        </footer>
+
+      </section>
+
+
+      <!-- =================================================== -->
+      <!-- CỘT 3 — CẤU TRÚC ĐỒNG TẠO -->
+      <!-- =================================================== -->
+      <aside class="panel result-panel">
+
+        <div class="panel-header">
+          <div class="title-group">
+            <span class="panel-number">3</span>
+
+            <div>
+              <h3>Cấu trúc đồng tạo theo thời gian thực</h3>
+              <p>Cập nhật sau mỗi lần Xác nhận.</p>
+            </div>
+          </div>
+
+          <span id="confirmedBadge" class="badge success">
+            0 đã xác nhận
+          </span>
+        </div>
+
+
+        <div id="liveResult" class="live-result"></div>
+
+
+        <div class="control-note">
+          <span>✓</span>
+
+          <div>
+            <strong>Quyền kiểm soát của người dùng</strong>
+
+            <p>
+              AI không tự chuyển dấu vết vào nhóm.
+              Chỉ quyết định đã được Xác nhận mới xuất hiện tại đây.
+            </p>
+          </div>
+        </div>
+
+      </aside>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- KIỂM TRA CUỐI -->
+    <!-- ===================================================== -->
+    <section id="finalReview" class="final-review hidden">
+
+      <div class="final-header">
+
+        <div>
+          <p class="eyebrow">KIỂM TRA CUỐI</p>
+
+          <h2>Ghi chú đồng tạo của bạn</h2>
+
+          <p>
+            Tất cả dấu vết học tập đã được người học
+            Xác nhận, Sửa hoặc Bỏ qua.
+          </p>
+        </div>
+
+
+        <span class="reviewed">
+          Đã được người dùng kiểm tra
+        </span>
+
+      </div>
+
+
+      <div class="stats">
+
+        <article>
+          <strong id="confirmedStat">0</strong>
+          <span>đã xác nhận</span>
+        </article>
+
+
+        <article>
+          <strong id="correctedStat">0</strong>
+          <span>đề xuất AI đã được sửa</span>
+        </article>
+
+
+        <article>
+          <strong id="skippedStat">0</strong>
+          <span>đã bỏ qua</span>
+        </article>
+
+      </div>
+
+
+      <div id="finalGrid" class="final-grid"></div>
+
+
+      <div class="final-actions">
+
+        <button
+          id="reviewAgainBtn"
+          class="btn secondary"
+          type="button"
+        >
+          Kiểm tra lại quyết định
+        </button>
+
+
+        <button
+          id="saveBtn"
+          class="btn primary"
+          type="button"
+        >
+          Lưu ghi chú đồng tạo
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- GHI CHÚ NGUYÊN MẪU -->
+    <!-- ===================================================== -->
+    <section class="prototype-note">
+      <strong>Cơ chế Phương án B:</strong>
+
+      Người dùng + AI cùng tạo ghi chú thông qua chuỗi quyết định.
+      AI <em>hỏi trước</em> thay vì tự động phân loại toàn bộ.
+    </section>
+
+  </main>
+
+
+  <!-- ======================================================= -->
+  <!-- MODAL TẠO NHÓM -->
+  <!-- ======================================================= -->
+  <div
+    id="categoryModal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div class="modal-card">
+
+      <div class="modal-header">
+
+        <div>
+          <p>TẠO NHÓM</p>
+          <h3>Tạo nhóm mới</h3>
+        </div>
+
+
+        <button
+          id="closeModalBtn"
+          type="button"
+          aria-label="Đóng"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <label for="categoryInput">
+          Tên nhóm
+        </label>
+
+        <input
+          id="categoryInput"
+          type="text"
+          maxlength="45"
+          placeholder="Ví dụ: Nội dung ôn thi"
+        />
+
+        <p>
+          Nhóm mới sẽ được chọn ngay cho dấu vết học tập hiện tại.
+        </p>
+
+      </div>
+
+
+      <div class="modal-footer">
+
+        <button
+          id="cancelCategoryBtn"
+          class="btn secondary"
+          type="button"
+        >
+          Hủy
+        </button>
+
+
+        <button
+          id="createCategoryBtn"
+          class="btn primary"
+          type="button"
+        >
+          Tạo &amp; chọn
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ======================================================= -->
+  <!-- TOAST -->
+  <!-- ======================================================= -->
+  <div
+    id="toast"
+    class="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+
+  <script>
+    // =========================================================
+    // PHƯƠNG ÁN B — AI HƯỚNG DẪN TỔ CHỨC GHI CHÚ
+    // Không dùng API hoặc model thật.
+    // AI suggestion được mô phỏng sẵn để kiểm thử prototype.
+    // =========================================================
+
+
+    // ---------------------------------------------------------
+    // 1. DỮ LIỆU MẪU
+    // ---------------------------------------------------------
+
+    const TRACE_DATA = [
+      {
+        id: "t1",
+        type: "Highlight",
+        title: "Độ trễ P95",
+        detail:
+          "Độ trễ P95 là ngưỡng mà 95% yêu cầu hoàn thành trong hoặc dưới mức đó.",
+        source:
+          "Chỉ số độ trễ · Đánh dấu 01",
+        aiCategory:
+          "Key Concepts",
+        aiReason:
+          "Bạn đã đánh dấu một định nghĩa cốt lõi, nên AI cho rằng đây là kiến thức cần nhớ.",
+        uncertainty:
+          ""
+      },
+
+      {
+        id: "t2",
+        type: "Highlight",
+        title: "Độ trễ trung bình",
+        detail:
+          "Độ trễ trung bình có thể che giấu một số ít yêu cầu rất chậm.",
+        source:
+          "Chỉ số độ trễ · Đánh dấu 02",
+        aiCategory:
+          "Key Concepts",
+        aiReason:
+          "Đây là ý chính giải thích giới hạn của độ trễ trung bình và liên quan trực tiếp đến P95.",
+        uncertainty:
+          ""
+      },
+
+      {
+        id: "t3",
+        type: "Chưa hiểu",
+        title: "Phân vị (Percentile)",
+        detail:
+          "Khái niệm cần xem lại trước khi ôn P50, P95 và P99.",
+        source:
+          "Chỉ số độ trễ · Được đánh dấu “Chưa hiểu”",
+        aiCategory:
+          "Need to Review",
+        aiReason:
+          "Bạn đánh dấu nội dung này là “Chưa hiểu”, nên AI đề xuất đưa vào phần cần ôn lại.",
+        uncertainty:
+          "AI không biết bạn chưa hiểu định nghĩa phân vị hay chưa hiểu cách áp dụng phân vị vào độ trễ."
+      },
+
+      {
+        id: "t4",
+        type: "Question",
+        title:
+          "Tại sao dùng P95 thay vì độ trễ trung bình?",
+        detail:
+          "Câu hỏi cá nhân được ghi lại trong lúc học.",
+        source:
+          "Câu hỏi của tôi · Câu hỏi 01",
+        aiCategory:
+          "My Questions",
+        aiReason:
+          "Đây là câu hỏi mở của người học, nên AI đề xuất giữ lại để xử lý sau.",
+        uncertainty:
+          ""
+      },
+
+      {
+        id: "t5",
+        type: "Note",
+        title:
+          "P95 giúp nhìn thấy độ trễ ở phần đuôi phân phối.",
+        detail:
+          "Ghi chú ngắn của người học.",
+        source:
+          "Ghi chú của tôi · Ghi chú 01",
+        aiCategory:
+          "Key Concepts",
+        aiReason:
+          "Nội dung này tóm tắt một ý chính và có thể dùng khi ôn nhanh.",
+        uncertainty:
+          "AI không chắc bạn muốn lưu nội dung này như một khái niệm chính hay chỉ là ghi chú hỗ trợ."
+      },
+
+      {
+        id: "t6",
+        type: "Note",
+        title:
+          "Cần xem lại P50 / P95 / P99",
+        detail:
+          "So sánh ba phân vị trước khi ôn tập.",
+        source:
+          "Ghi chú của tôi · Ghi chú 02",
+        aiCategory:
+          "Need to Review",
+        aiReason:
+          "Cụm “Cần xem lại” cho thấy đây là một việc cần làm trong lần ôn tập sau.",
+        uncertainty:
+          ""
+      }
+    ];
+
+
+    const DEFAULT_CATEGORIES = [
+      "Key Concepts",
+      "Need to Review",
+      "My Questions",
+      "Review Later"
+    ];
+
+
+    // ---------------------------------------------------------
+    // 2. TRẠNG THÁI
+    // ---------------------------------------------------------
+
+    let categories = [...DEFAULT_CATEGORIES];
+
+    let currentIndex = 0;
+
+    /*
+      decisions = {
+        t1: {
+          action: "confirm",
+          category: "Key Concepts",
+          aiCategory: "Key Concepts",
+          corrected: false
+        }
+      }
+    */
+    let decisions = {};
+
+
+    /*
+      pendingChoices lưu lựa chọn tạm thời của từng trace.
+
+      Nhờ đó:
+      - user chọn category khác
+      - UI render lại
+      - lựa chọn KHÔNG bị reset về AI suggestion.
+    */
+    let pendingChoices = {};
+
+
+    // ---------------------------------------------------------
+    // 3. HELPER
+    // ---------------------------------------------------------
+
+    const $ = (id) => document.getElementById(id);
+
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    function typeClass(type) {
+      if (type === "Highlight") {
+        return "highlight";
+      }
+
+      if (type === "Chưa hiểu") {
+        return "unknown";
+      }
+
+      if (type === "Question") {
+        return "question";
+      }
+
+      return "note";
+    }
+
+
+    function typeLabel(type) {
+      const labels = {
+        Highlight: "Đánh dấu",
+        "Chưa hiểu": "Chưa hiểu",
+        Question: "Câu hỏi",
+        Note: "Ghi chú"
+      };
+
+      return labels[type] || type;
+    }
+
+
+    function categoryLabel(category) {
+      const labels = {
+        "Key Concepts": "Khái niệm chính",
+        "Need to Review": "Cần xem lại",
+        "My Questions": "Câu hỏi của tôi",
+        "Review Later": "Xem lại sau"
+      };
+
+      return labels[category] || category;
+    }
+
+
+    function getTrace(index = currentIndex) {
+      return TRACE_DATA[index];
+    }
+
+
+    function getDecision(traceId) {
+      return decisions[traceId] || null;
+    }
+
+
+    function getCurrentChoice(trace) {
+
+      if (
+        Object.prototype.hasOwnProperty.call(
+          pendingChoices,
+          trace.id
+        )
+      ) {
+        return pendingChoices[trace.id];
+      }
+
+
+      const decision = getDecision(trace.id);
+
+
+      if (
+        decision &&
+        decision.action === "confirm"
+      ) {
+        pendingChoices[trace.id] =
+          decision.category;
+
+        return decision.category;
+      }
+
+
+      pendingChoices[trace.id] =
+        trace.aiCategory;
+
+      return trace.aiCategory;
+    }
+
+
+    function setStep(stepNumber) {
+
+      document
+        .querySelectorAll(".step")
+        .forEach((step) => {
+
+          const number =
+            Number(step.dataset.step);
+
+          step.classList.toggle(
+            "active",
+            number === stepNumber
+          );
+
+          step.classList.toggle(
+            "done",
+            number < stepNumber
+          );
+        });
+    }
+
+
+    // ---------------------------------------------------------
+    // 4. HIỂN THỊ DECISION QUEUE
+    // ---------------------------------------------------------
+
+    function renderQueue() {
+
+      const decidedCount =
+        Object.keys(decisions).length;
+
+
+      $("queueList").innerHTML =
+        TRACE_DATA
+          .map((trace, index) => {
+
+            const decision =
+              getDecision(trace.id);
+
+
+            let state =
+              "pending";
+
+            let stateText =
+              "Đang chờ";
+
+
+            if (
+              decision?.action === "confirm"
+            ) {
+              state =
+                "confirmed";
+
+              stateText =
+                "Đã xác nhận";
+            }
+
+            else if (
+              decision?.action === "skip"
+            ) {
+              state =
+                "skipped";
+
+              stateText =
+                "Đã bỏ qua";
+            }
+
+            else if (
+              index === currentIndex
+            ) {
+              state =
+                "current";
+
+              stateText =
+                "Đang chọn";
+            }
+
+
+            return `
+              <button
+                class="queue-item ${state}"
+                type="button"
+                data-index="${index}"
+              >
+
+                <div class="queue-item-top">
+                  <span>
+                    #${index + 1}
+                  </span>
+
+                  <strong>
+                    ${stateText}
+                  </strong>
+                </div>
+
+
+                <span
+                  class="type-badge ${typeClass(trace.type)}"
+                >
+                  ${escapeHtml(typeLabel(trace.type))}
+                </span>
+
+
+                <h4>
+                  ${escapeHtml(trace.title)}
+                </h4>
+
+
+                <small>
+                  ${escapeHtml(trace.source)}
+                </small>
+
+
+                ${
+                  decision?.action === "confirm"
+                    ? `
+                      <span class="chosen-category">
+                        ${escapeHtml(
+                          categoryLabel(decision.category)
+                        )}
+                      </span>
+                    `
+                    : ""
+                }
+
+              </button>
+            `;
+          })
+          .join("");
+
+
+      const pending =
+        TRACE_DATA.length - decidedCount;
+
+
+      $("pendingBadge").textContent =
+        pending > 0
+          ? `${pending} đang chờ`
+          : "Hoàn thành";
+
+
+      $("pendingBadge").className =
+        "badge " +
+        (
+          pending > 0
+            ? "neutral"
+            : "success"
+        );
+
+
+      document
+        .querySelectorAll(".queue-item")
+        .forEach((button) => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              currentIndex =
+                Number(button.dataset.index);
+
+              renderAll();
+
+
+              $("decisionArea").scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+              });
+            }
+          );
+        });
+    }
+
+
+    // ---------------------------------------------------------
+    // 5. HIỂN THỊ TRACE HIỆN TẠI + AI ASK
+    // ---------------------------------------------------------
+
+    function renderDecision() {
+
+      const trace =
+        getTrace();
+
+
+      const decision =
+        getDecision(trace.id);
+
+
+      const selected =
+        getCurrentChoice(trace);
+
+
+      $("decisionBadge").textContent =
+        decision
+          ? "Kiểm tra quyết định"
+          : "AI hỏi";
+
+
+      const corrected =
+        selected !== trace.aiCategory;
+
+
+      $("decisionArea").innerHTML = `
+        <article class="trace-focus">
+
+          <div class="trace-focus-top">
+
+            <div>
+              <span class="trace-counter">
+                Dấu vết
+                ${currentIndex + 1}
+                /
+                ${TRACE_DATA.length}
+              </span>
+
+
+              <span
+                class="type-badge ${typeClass(trace.type)}"
+              >
+                ${escapeHtml(typeLabel(trace.type))}
+              </span>
+            </div>
+
+
+            <span class="source-label">
+              Nguồn ban đầu
+            </span>
+
+          </div>
+
+
+          <h2>
+            ${escapeHtml(trace.title)}
+          </h2>
+
+
+          <p>
+            ${escapeHtml(trace.detail)}
+          </p>
+
+
+          <small>
+            ${escapeHtml(trace.source)}
+          </small>
+
+        </article>
+
+
+        <article class="ai-card">
+
+          <div class="ai-card-head">
+
+            <span class="ai-avatar">
+              AI
+            </span>
+
+
+            <div>
+              <strong>
+                Diễn giải của AI
+              </strong>
+
+              <small>
+                Chỉ là đề xuất — chưa được áp dụng
+              </small>
+            </div>
+
+          </div>
+
+
+          <p>
+            ${escapeHtml(trace.aiReason)}
+          </p>
+
+
+          ${
+            trace.uncertainty
+              ? `
+                <div class="uncertainty">
+
+                  <span>!</span>
+
+                  <div>
+                    <strong>
+                      AI chưa chắc chắn
+                    </strong>
+
+                    <p>
+                      ${escapeHtml(trace.uncertainty)}
+                    </p>
+                  </div>
+
+                </div>
+              `
+              : ""
+          }
+
+        </article>
+
+
+        <article class="ask-card">
+
+          <div class="ask-header">
+
+            <div>
+              <span>
+                AI HỎI
+              </span>
+
+              <h3>
+                Bạn muốn đưa dấu vết này
+                vào nhóm nào?
+              </h3>
+            </div>
+
+
+            <span
+              id="correctionBadge"
+              class="
+                correction-badge
+                ${corrected ? "" : "hidden"}
+              "
+            >
+              Đã sửa đề xuất của AI
+            </span>
+
+          </div>
+
+
+          <div class="category-grid">
+
+            ${categories
+              .map((category) => `
+                <label
+                  class="
+                    category-option
+                    ${
+                      selected === category
+                        ? "selected"
+                        : ""
+                    }
+                  "
+                >
+
+                  <input
+                    type="radio"
+                    name="category"
+                    value="${escapeHtml(category)}"
+                    ${
+                      selected === category
+                        ? "checked"
+                        : ""
+                    }
+                  />
+
+
+                  <span class="radio"></span>
+
+
+                  <div>
+                    <strong>
+                      ${escapeHtml(
+                        categoryLabel(category)
+                      )}
+                    </strong>
+
+                    <small>
+                      ${
+                        category === trace.aiCategory
+                          ? "AI đề xuất"
+                          : "Lựa chọn khác"
+                      }
+                    </small>
+                  </div>
+
+                </label>
+              `)
+              .join("")}
+
+
+            <button
+              id="newCategoryBtn"
+              class="new-category"
+              type="button"
+            >
+
+              <span>＋</span>
+
+              <div>
+                <strong>
+                  Tạo nhóm mới
+                </strong>
+
+                <small>
+                  Tự tạo cách tổ chức khác
+                </small>
+              </div>
+
+            </button>
+
+          </div>
+
+
+          <div class="comparison">
+
+            <div>
+              <span>
+                Đề xuất của AI
+              </span>
+
+              <strong>
+                ${escapeHtml(
+                  categoryLabel(trace.aiCategory)
+                )}
+              </strong>
+            </div>
+
+
+            <div class="arrow">
+              →
+            </div>
+
+
+            <div>
+              <span>
+                Lựa chọn của bạn
+              </span>
+
+              <strong id="yourChoiceText">
+                ${escapeHtml(
+                  categoryLabel(selected)
+                )}
+              </strong>
+            </div>
+
+          </div>
+
+        </article>
+      `;
+
+
+      // -----------------------------------------
+      // Khi user chọn category khác
+      // -----------------------------------------
+
+      document
+        .querySelectorAll(
+          'input[name="category"]'
+        )
+        .forEach((radio) => {
+
+          radio.addEventListener(
+            "change",
+            () => {
+
+              // Lưu lựa chọn tạm thời
+              // để không bị reset khi render lại.
+              pendingChoices[trace.id] =
+                radio.value;
+
+
+              // Cập nhật giao diện radio
+              document
+                .querySelectorAll(
+                  ".category-option"
+                )
+                .forEach((option) => {
+
+                  const input =
+                    option.querySelector(
+                      'input[name="category"]'
+                    );
+
+                  option.classList.toggle(
+                    "selected",
+                    input.checked
+                  );
+                });
+
+
+              // Cập nhật "Lựa chọn của bạn"
+              $("yourChoiceText").textContent =
+                categoryLabel(radio.value);
+
+
+              // Nếu khác AI suggestion
+              // thì hiển thị badge corrected.
+              $("correctionBadge")
+                .classList
+                .toggle(
+                  "hidden",
+                  radio.value ===
+                    trace.aiCategory
+                );
+
+
+              setStep(3);
+            }
+          );
+        });
+
+
+      $("newCategoryBtn")
+        .addEventListener(
+          "click",
+          openCategoryModal
+        );
+
+
+      $("previousBtn").disabled =
+        currentIndex === 0;
+
+
+      setStep(
+        decision
+          ? 3
+          : 2
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 6. CONFIRM
+    // ---------------------------------------------------------
+
+    function confirmCurrent() {
+
+      const trace =
+        getTrace();
+
+
+      const selected =
+        getCurrentChoice(trace);
+
+
+      decisions[trace.id] = {
+        action:
+          "confirm",
+
+        category:
+          selected,
+
+        aiCategory:
+          trace.aiCategory,
+
+        corrected:
+          selected !== trace.aiCategory
+      };
+
+
+      moveToNextUndecided();
+
+      renderAll();
+
+
+      showToast(
+        selected === trace.aiCategory
+          ? "Đã xác nhận đề xuất của AI."
+          : "Đã lưu lựa chọn khác với đề xuất của AI."
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 7. SKIP
+    // ---------------------------------------------------------
+
+    function skipCurrent() {
+
+      const trace =
+        getTrace();
+
+
+      decisions[trace.id] = {
+        action:
+          "skip",
+
+        category:
+          null,
+
+        aiCategory:
+          trace.aiCategory,
+
+        corrected:
+          false
+      };
+
+
+      moveToNextUndecided();
+
+      renderAll();
+
+
+      showToast(
+        "Đã bỏ qua dấu vết học tập."
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 8. ĐI TỚI TRACE CHƯA XỬ LÝ TIẾP THEO
+    // ---------------------------------------------------------
+
+    function moveToNextUndecided() {
+
+      const next =
+        TRACE_DATA.findIndex(
+          (trace) =>
+            !getDecision(trace.id)
+        );
+
+
+      if (next >= 0) {
+
+        currentIndex =
+          next;
+      }
+
+      else {
+
+        currentIndex =
+          Math.min(
+            currentIndex,
+            TRACE_DATA.length - 1
+          );
+
+
+        // Mở Final Review khi đã xử lý đủ 6 trace.
+        setTimeout(
+          openFinalReview,
+          50
+        );
+      }
+    }
+
+
+    // ---------------------------------------------------------
+    // 9. TRACE TRƯỚC
+    // ---------------------------------------------------------
+
+    function previousTrace() {
+
+      currentIndex =
+        currentIndex === 0
+          ? TRACE_DATA.length - 1
+          : currentIndex - 1;
+
+
+      renderAll();
+    }
+
+
+    // ---------------------------------------------------------
+    // 10. LIVE CO-CREATED STRUCTURE
+    // ---------------------------------------------------------
+
+    function renderLiveResult() {
+
+      const confirmed =
+        Object.entries(decisions)
+
+          .filter(
+            ([, decision]) =>
+              decision.action === "confirm"
+          )
+
+          .map(
+            ([traceId, decision]) => ({
+              trace:
+                TRACE_DATA.find(
+                  (trace) =>
+                    trace.id === traceId
+                ),
+
+              decision
+            })
+          );
+
+
+      $("confirmedBadge").textContent =
+        `${confirmed.length} đã xác nhận`;
+
+
+      if (!confirmed.length) {
+
+        $("liveResult").innerHTML = `
+          <div class="empty-live">
+
+            <div>↗</div>
+
+            <h4>
+              Chưa có quyết định nào được xác nhận
+            </h4>
+
+            <p>
+              Sau khi Xác nhận một dấu vết,
+              kết quả sẽ xuất hiện tại đây.
+            </p>
+
+          </div>
+        `;
+
+        return;
+      }
+
+
+      const groups = {};
+
+
+      confirmed.forEach(
+        ({ trace, decision }) => {
+
+          if (!groups[decision.category]) {
+            groups[decision.category] = [];
+          }
+
+
+          groups[decision.category].push({
+            trace,
+            decision
+          });
+        }
+      );
+
+
+      $("liveResult").innerHTML =
+        Object.entries(groups)
+
+          .map(
+            ([category, items]) => `
+              <article class="live-group">
+
+                <div class="live-group-header">
+
+                  <h4>
+                    ${escapeHtml(
+                      categoryLabel(category)
+                    )}
+                  </h4>
+
+                  <span>
+                    ${items.length} mục
+                  </span>
+
+                </div>
+
+
+                <div class="live-items">
+
+                  ${items
+                    .map(
+                      ({ trace, decision }) => `
+                        <div class="live-item">
+
+                          <div>
+
+                            <span>
+                              ${escapeHtml(
+                                typeLabel(trace.type)
+                              )}
+                            </span>
+
+                            <strong>
+                              ${escapeHtml(trace.title)}
+                            </strong>
+
+                          </div>
+
+
+                          ${
+                            decision.corrected
+                              ? `
+                                <i
+                                  title="Đã sửa đề xuất của AI"
+                                ></i>
+                              `
+                              : ""
+                          }
+
+                        </div>
+                      `
+                    )
+                    .join("")}
+
+                </div>
+
+              </article>
+            `
+          )
+
+          .join("");
+    }
+
+
+    // ---------------------------------------------------------
+    // 11. PROGRESS
+    // ---------------------------------------------------------
+
+    function renderProgress() {
+
+      const completed =
+        Object.keys(decisions).length;
+
+
+      $("progressText").textContent =
+        `${completed}/${TRACE_DATA.length}`;
+
+
+      if (
+        completed === TRACE_DATA.length
+      ) {
+        setStep(4);
+      }
+    }
+
+
+    // ---------------------------------------------------------
+    // 12. RENDER TẤT CẢ
+    // ---------------------------------------------------------
+
+    function renderAll() {
+
+      renderQueue();
+
+      renderDecision();
+
+      renderLiveResult();
+
+      renderProgress();
+    }
+
+
+    // ---------------------------------------------------------
+    // 13. MODAL TẠO NHÓM
+    // ---------------------------------------------------------
+
+    function openCategoryModal() {
+
+      $("categoryInput").value =
+        "";
+
+
+      $("categoryModal")
+        .classList
+        .remove("hidden");
+
+
+      $("categoryInput")
+        .focus();
+    }
+
+
+    function closeCategoryModal() {
+
+      $("categoryModal")
+        .classList
+        .add("hidden");
+    }
+
+
+    function createCategory() {
+
+      const name =
+        $("categoryInput")
+          .value
+          .trim();
+
+
+      if (!name) {
+
+        showToast(
+          "Hãy nhập tên nhóm."
+        );
+
+        return;
+      }
+
+
+      const existing =
+        categories.find(
+          (category) =>
+            category
+              .toLowerCase() ===
+            name
+              .toLowerCase()
+        );
+
+
+      const finalName =
+        existing || name;
+
+
+      if (!existing) {
+        categories.push(finalName);
+      }
+
+
+      const trace =
+        getTrace();
+
+
+      pendingChoices[trace.id] =
+        finalName;
+
+
+      closeCategoryModal();
+
+
+      renderDecision();
+
+
+      setStep(3);
+
+
+      showToast(
+        `Đã chọn nhóm "${categoryLabel(finalName)}".`
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 14. FINAL REVIEW
+    // ---------------------------------------------------------
+
+    function openFinalReview() {
+
+      if (
+        Object.keys(decisions).length !==
+        TRACE_DATA.length
+      ) {
+        return;
+      }
+
+
+      const confirmed =
+        Object.entries(decisions)
+          .filter(
+            ([, decision]) =>
+              decision.action === "confirm"
+          );
+
+
+      const corrected =
+        confirmed.filter(
+          ([, decision]) =>
+            decision.corrected
+        );
+
+
+      const skipped =
+        Object.values(decisions)
+          .filter(
+            (decision) =>
+              decision.action === "skip"
+          );
+
+
+      $("confirmedStat").textContent =
+        confirmed.length;
+
+
+      $("correctedStat").textContent =
+        corrected.length;
+
+
+      $("skippedStat").textContent =
+        skipped.length;
+
+
+      renderFinalGrid();
+
+
+      $("finalReview")
+        .classList
+        .remove("hidden");
+
+
+      setStep(4);
+
+
+      setTimeout(
+        () => {
+          $("finalReview")
+            .scrollIntoView({
+              behavior:
+                "smooth",
+
+              block:
+                "start"
+            });
+        },
+        60
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 15. FINAL GRID
+    // ---------------------------------------------------------
+
+    function renderFinalGrid() {
+
+      const groups = {};
+
+
+      Object.entries(decisions)
+        .forEach(
+          ([traceId, decision]) => {
+
+            if (
+              decision.action !== "confirm"
+            ) {
+              return;
+            }
+
+
+            if (!groups[decision.category]) {
+              groups[decision.category] = [];
+            }
+
+
+            groups[decision.category].push({
+
+              trace:
+                TRACE_DATA.find(
+                  (trace) =>
+                    trace.id === traceId
+                ),
+
+              decision
+            });
+          }
+        );
+
+
+      $("finalGrid").innerHTML =
+        Object.entries(groups)
+
+          .map(
+            ([category, items]) => `
+              <article class="final-group">
+
+                <div class="final-group-header">
+
+                  <h3>
+                    ${escapeHtml(
+                      categoryLabel(category)
+                    )}
+                  </h3>
+
+                  <span>
+                    ${items.length} mục
+                  </span>
+
+                </div>
+
+
+                <div class="final-items">
+
+                  ${items
+                    .map(
+                      ({ trace, decision }) => `
+                        <div class="final-item">
+
+                          <span
+                            class="
+                              type-badge
+                              ${typeClass(trace.type)}
+                            "
+                          >
+                            ${escapeHtml(
+                              typeLabel(trace.type)
+                            )}
+                          </span>
+
+
+                          <div>
+
+                            <strong>
+                              ${escapeHtml(trace.title)}
+                            </strong>
+
+
+                            <small>
+                              ${escapeHtml(trace.source)}
+                            </small>
+
+
+                            ${
+                              decision.corrected
+                                ? `
+                                  <em>
+                                    Người dùng đã đổi
+                                    đề xuất của AI từ
+                                    ${escapeHtml(
+                                      categoryLabel(
+                                        decision.aiCategory
+                                      )
+                                    )}
+                                  </em>
+                                `
+                                : ""
+                            }
+
+                          </div>
+
+                        </div>
+                      `
+                    )
+                    .join("")}
+
+                </div>
+
+              </article>
+            `
+          )
+
+          .join("");
+    }
+
+
+    // ---------------------------------------------------------
+    // 16. REVIEW AGAIN
+    // ---------------------------------------------------------
+
+    function reviewAgain() {
+
+      $("finalReview")
+        .classList
+        .add("hidden");
+
+
+      setStep(3);
+
+
+      $("decisionArea")
+        .scrollIntoView({
+          behavior:
+            "smooth",
+
+          block:
+            "center"
+        });
+    }
+
+
+    // ---------------------------------------------------------
+    // 17. SAVE
+    // ---------------------------------------------------------
+
+    function saveNotes() {
+
+      localStorage.setItem(
+        "day18-option-b-guided-v3",
+
+        JSON.stringify({
+          savedAt:
+            new Date().toISOString(),
+
+          decisions,
+
+          categories,
+
+          reviewedByUser:
+            true
+        })
+      );
+
+
+      showToast(
+        "Đã lưu ghi chú đồng tạo."
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 18. RESET
+    // ---------------------------------------------------------
+
+    function resetPrototype() {
+
+      const hasWork =
+        Object.keys(decisions).length > 0;
+
+
+      if (
+        hasWork &&
+        !window.confirm(
+          "Đặt lại toàn bộ Phương án B?"
+        )
+      ) {
+        return;
+      }
+
+
+      categories =
+        [...DEFAULT_CATEGORIES];
+
+
+      currentIndex =
+        0;
+
+
+      decisions =
+        {};
+
+
+      pendingChoices =
+        {};
+
+
+      localStorage.removeItem(
+        "day18-option-b-guided-v3"
+      );
+
+
+      $("finalReview")
+        .classList
+        .add("hidden");
+
+
+      renderAll();
+
+
+      setStep(1);
+
+
+      showToast(
+        "Đã đặt lại Phương án B."
+      );
+    }
+
+
+    // ---------------------------------------------------------
+    // 19. TOAST
+    // ---------------------------------------------------------
+
+    function showToast(message) {
+
+      $("toast").textContent =
+        message;
+
+
+      $("toast")
+        .classList
+        .add("show");
+
+
+      clearTimeout(
+        showToast.timer
+      );
+
+
+      showToast.timer =
+        setTimeout(
+          () => {
+            $("toast")
+              .classList
+              .remove("show");
+          },
+          2200
+        );
+    }
+
+
+    // ---------------------------------------------------------
+    // 20. EVENTS
+    // ---------------------------------------------------------
+
+    $("confirmBtn")
+      .addEventListener(
+        "click",
+        confirmCurrent
+      );
+
+
+    $("skipBtn")
+      .addEventListener(
+        "click",
+        skipCurrent
+      );
+
+
+    $("previousBtn")
+      .addEventListener(
+        "click",
+        previousTrace
+      );
+
+
+    $("resetBtn")
+      .addEventListener(
+        "click",
+        resetPrototype
+      );
+
+
+    $("closeModalBtn")
+      .addEventListener(
+        "click",
+        closeCategoryModal
+      );
+
+
+    $("cancelCategoryBtn")
+      .addEventListener(
+        "click",
+        closeCategoryModal
+      );
+
+
+    $("createCategoryBtn")
+      .addEventListener(
+        "click",
+        createCategory
+      );
+
+
+    $("categoryInput")
+      .addEventListener(
+        "keydown",
+        (event) => {
+
+          if (
+            event.key === "Enter"
+          ) {
+            createCategory();
+          }
+        }
+      );
+
+
+    $("categoryModal")
+      .addEventListener(
+        "click",
+        (event) => {
+
+          if (
+            event.target ===
+            $("categoryModal")
+          ) {
+            closeCategoryModal();
+          }
+        }
+      );
+
+
+    $("reviewAgainBtn")
+      .addEventListener(
+        "click",
+        reviewAgain
+      );
+
+
+    $("saveBtn")
+      .addEventListener(
+        "click",
+        saveNotes
+      );
+
+
+    document
+      .addEventListener(
+        "keydown",
+        (event) => {
+
+          if (
+            event.key === "Escape"
+          ) {
+            closeCategoryModal();
+          }
+        }
+      );
+
+
+    // ---------------------------------------------------------
+    // 21. HIỂN THỊ BAN ĐẦU
+    // ---------------------------------------------------------
+
+    renderAll();
+
+    setStep(1);
+
+  </script>
+
+</body>
+</html>
